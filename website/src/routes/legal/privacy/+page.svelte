@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { Separator } from '$lib/components/ui/separator';
+	import { Alert02Icon, ShieldUserIcon } from '@hugeicons/core-free-icons';
 	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import { ShieldUserIcon, Alert02Icon } from '@hugeicons/core-free-icons';
-	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import * as Alert from '$lib/components/ui/alert';
 	import { goto } from '$app/navigation';
 	import SEO from '$lib/components/self/SEO.svelte';
+	import * as Alert from '$lib/components/ui/alert';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import { Separator } from '$lib/components/ui/separator';
 
 	const LAST_UPDATED = 'February 21, 2026';
 	const CONTACT_EMAIL = 'contact@outpoot.com';
 </script>
 
 <SEO
-	title="Privacy Policy - XprismPlay"
-	description="Privacy Policy for Rugplay cryptocurrency simulation game. Learn about data collection, account deletion process, virtual currency privacy, and your rights."
+	title="Privacy Policy - BooPlay"
+	description="Privacy Policy for Booplay cryptocurrency simulation game. Learn about data collection, account deletion process, virtual currency privacy, and your rights."
 	keywords="privacy policy, data protection, account deletion, virtual currency privacy, simulation game privacy"
 />
 
@@ -50,7 +50,7 @@
 					it, and what happens when you delete your account.
 				</p>
 				<p>
-					<strong>Platform Note:</strong> Rugplay is a simulated trading environment using virtual currency
+					<strong>Platform Note:</strong> Booplay is a simulated trading environment using virtual currency
 					("*BUSS" or "$") with no real monetary value.
 				</p>
 			</Card.Content>
@@ -421,7 +421,7 @@
 					<strong>Contact:</strong>
 					<a href="mailto:{CONTACT_EMAIL}" class="text-primary underline">{CONTACT_EMAIL}</a>
 				</p>
-				<p><strong>Platform:</strong> Rugplay - virtual cryptocurrency trading simulation</p>
+				<p><strong>Platform:</strong> Booplay - virtual cryptocurrency trading simulation</p>
 			</div>
 		</div>
 

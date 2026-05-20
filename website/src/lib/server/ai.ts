@@ -1,9 +1,9 @@
+import { desc, eq, gte, sql } from 'drizzle-orm';
 import OpenAI from 'openai';
 import { z } from 'zod';
 import { OPENROUTER_API_KEY } from '$env/static/private';
 import { db } from './db';
-import { coin, user, transaction, priceHistory } from './db/schema';
-import { eq, desc, sql, gte } from 'drizzle-orm';
+import { coin, priceHistory, transaction, user } from './db/schema';
 
 if (!OPENROUTER_API_KEY) {
 	throw new Error('OPENROUTER_API_KEY is not set – AI features are disabled.');
@@ -249,11 +249,11 @@ export async function validateQuestion(
 	}
 
 	const prompt = `
-You are evaluating whether a prediction market question is valid and answerable for Rugplay, a cryptocurrency trading simulation platform.
+You are evaluating whether a prediction market question is valid and answerable for Booplay, a cryptocurrency trading simulation platform.
 
 Question: "${question}"
 
-Current Rugplay Market Context:
+Current Booplay Market Context:
 - Platform currency: $ (or *BUSS)
 - Total listed coins: ${marketOverview?.marketStats.totalCoins || 0}
 - Total market cap: $${marketOverview?.marketStats.totalMarketCap.toFixed(2) || '0'}
@@ -281,8 +281,8 @@ Determine the optimal resolution date based on the question type:
 - If the question explicitly states the date, use that as the resolution date
 
 Also determine:
-- Whether this question requires web search (external events, real-world data, non-Rugplay information)
-- If the question is related to the Rugplay market, and contains what appears to be a coin name, ensure it's properly formatted (e.g. *BTC, *DOGE). Invalid question example: "will BTC reach $100,000 in 1 hour?" (invalid coin format, should be *BTC). 
+- Whether this question requires web search (external events, real-world data, non-Booplay information)
+- If the question is related to the Booplay market, and contains what appears to be a coin name, ensure it's properly formatted (e.g. *BTC, *DOGE). Invalid question example: "will BTC reach $100,000 in 1 hour?" (invalid coin format, should be *BTC). 
 - Provide a specific resolution date with time (suggest times between 12:00-20:00 UTC for good global coverage) The current date and time is ${new Date().toISOString()}.
 
 Note: All coins use *SYMBOL format (e.g., *BTC, *DOGE). All trading is simulated with *BUSS currency.
@@ -297,7 +297,7 @@ Provide your response in the specified JSON format with a precise ISO 8601 datet
 				{
 					role: 'system',
 					content:
-						'You are a prediction market validator for Rugplay, a crypto trading simulation platform. Always respond with valid JSON matching the requested schema.'
+						'You are a prediction market validator for Booplay, a crypto trading simulation platform. Always respond with valid JSON matching the requested schema.'
 				},
 				{ role: 'user', content: prompt }
 			],
@@ -332,7 +332,7 @@ Provide your response in the specified JSON format with a precise ISO 8601 datet
 export async function resolveQuestion(
 	question: string,
 	requiresWebSearch: boolean,
-	customRugplayData?: string
+	customBooplayData?: string
 ): Promise<QuestionResolutionResult> {
 	if (!OPENROUTER_API_KEY) {
 		return {
@@ -344,15 +344,15 @@ export async function resolveQuestion(
 
 	const model = requiresWebSearch ? MODELS.WEB_SEARCH : MODELS.STANDARD;
 
-	const rugplayData = customRugplayData || (await getRugplayData(question));
+	const booplayData = customBooplayData || (await getBooplayData(question));
 
 	const prompt = `
-You are resolving a prediction market question with a definitive YES or NO answer for Rugplay.
+You are resolving a prediction market question with a definitive YES or NO answer for Booplay.
 
 Question: "${question}"
 
-Current Rugplay Platform Data:
-${rugplayData}
+Current Booplay Platform Data:
+${booplayData}
 
 Current timestamp: ${new Date().toISOString()}
 
@@ -366,7 +366,7 @@ Instructions:
 7. For external/real-world events, use web search if enabled
 8. The resolution date has PASSED - you are resolving this question after the deadline
 
-Context about Rugplay:
+Context about Booplay:
 - Cryptocurrency trading simulation platform with fake money (*BUSS)
 - All coins use *SYMBOL format (e.g., *BTC, *DOGE, *SHIB)
 - Features AMM liquidity pools, rug pull mechanics, and real market dynamics
@@ -386,7 +386,7 @@ Respond with JSON: { "resolution": boolean, "confidence": number (0-100), "reaso
 				{
 					role: 'system',
 					content:
-						'You are a prediction market resolver for Rugplay, a crypto trading simulation platform. Analyze the provided data carefully and resolve the question with a definitive YES or NO. Always respond with valid JSON matching the requested schema. Base your decision on factual data provided, not speculation.'
+						'You are a prediction market resolver for Booplay, a crypto trading simulation platform. Analyze the provided data carefully and resolve the question with a definitive YES or NO. Always respond with valid JSON matching the requested schema. Base your decision on factual data provided, not speculation.'
 				},
 				{ role: 'user', content: prompt }
 			],
@@ -413,7 +413,7 @@ Respond with JSON: { "resolution": boolean, "confidence": number (0-100), "reaso
 	}
 }
 
-export async function getRugplayData(question?: string): Promise<string> {
+export async function getBooplayData(question?: string): Promise<string> {
 	try {
 		const marketOverview = await getMarketOverview();
 
@@ -431,7 +431,7 @@ export async function getRugplayData(question?: string): Promise<string> {
 				coinSpecificData = '\n\nCoin Analysis for Question:';
 
 				if (nonExistentCoins.length > 0) {
-					coinSpecificData += `\nNON-EXISTENT COINS: ${nonExistentCoins.map((symbol) => `*${symbol}`).join(', ')} - These coins do not exist on the Rugplay platform`;
+					coinSpecificData += `\nNON-EXISTENT COINS: ${nonExistentCoins.map((symbol) => `*${symbol}`).join(', ')} - These coins do not exist on the Booplay platform`;
 				}
 
 				if (existingCoins.length > 0) {
@@ -466,7 +466,7 @@ ${coin.recentTrades
 
 		return `
 Current Timestamp: ${new Date().toISOString()}
-Platform: Rugplay - Cryptocurrency Trading Simulation
+Platform: Booplay - Cryptocurrency Trading Simulation
 
 Market Overview:
 - Total Listed Coins: ${marketOverview?.marketStats.totalCoins || 0}
@@ -494,7 +494,7 @@ Platform Details:
 - Coins use *SYMBOL format (e.g., *BTC, *DOGE, *SHIB)${coinSpecificData}
         `;
 	} catch (error) {
-		console.error('Error generating Rugplay data:', error);
+		console.error('Error generating Booplay data:', error);
 		return `Couldn't retrieve data, please try again later.`;
 	}
 }

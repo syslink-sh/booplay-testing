@@ -1,13 +1,14 @@
 // src/lib/auth.ts (or your auth config file)
+
+import { apiKey } from '@better-auth/api-key';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 import { db } from './server/db';
 import * as schema from './server/db/schema';
-import { generateUsername } from './utils/random';
 import { uploadProfilePicture } from './server/s3';
-import { apiKey } from '@better-auth/api-key';
+import { generateUsername } from './utils/random';
 
 if (!privateEnv.GOOGLE_CLIENT_ID) throw new Error('GOOGLE_CLIENT_ID is not set');
 if (!privateEnv.GOOGLE_CLIENT_SECRET) throw new Error('GOOGLE_CLIENT_SECRET is not set');
@@ -16,7 +17,7 @@ if (!publicEnv.PUBLIC_BETTER_AUTH_URL) throw new Error('PUBLIC_BETTER_AUTH_URL i
 export const auth = betterAuth({
 	//    baseURL: publicEnv.PUBLIC_BETTER_AUTH_URL,
 	secret: privateEnv.PRIVATE_BETTER_AUTH_SECRET,
-	appName: 'XprismPlay',
+	appName: 'BooPlay',
 
 	trustedOrigins: [
 		publicEnv.PUBLIC_BETTER_AUTH_URL,

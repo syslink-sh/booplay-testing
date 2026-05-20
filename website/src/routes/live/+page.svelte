@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import * as HoverCard from '$lib/components/ui/hover-card';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
 		Activity01Icon,
-		TradeUpIcon,
-		TradeDownIcon,
 		Clock01Icon,
-		FireIcon
+		FireIcon,
+		TradeDownIcon,
+		TradeUpIcon
 	} from '@hugeicons/core-free-icons';
-	import { allTradesStore, isLoadingTrades, loadInitialTrades } from '$lib/stores/websocket';
-	import { goto } from '$app/navigation';
-	import { formatQuantity, formatRelativeTime, formatValue, getPublicUrl } from '$lib/utils';
-	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
-	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
-	import LiveTradeSkeleton from '$lib/components/self/skeletons/LiveTradeSkeleton.svelte';
-	import SEO from '$lib/components/self/SEO.svelte';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
+	import SEO from '$lib/components/self/SEO.svelte';
+	import LiveTradeSkeleton from '$lib/components/self/skeletons/LiveTradeSkeleton.svelte';
+	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import * as HoverCard from '$lib/components/ui/hover-card';
+	import { allTradesStore, isLoadingTrades, loadInitialTrades } from '$lib/stores/websocket';
+	import { formatQuantity, formatRelativeTime, formatValue, getPublicUrl } from '$lib/utils';
 
 	function handleUserClick(username: string) {
 		goto(`/user/${username}`);
@@ -38,14 +38,14 @@
 </script>
 
 <SEO
-	title="Live Trades - XprismPlay"
-	description="Watch real-time virtual cryptocurrency trading activity in the Rugplay simulation game. See live trades, user activity, and market movements as they happen."
+	title="Live Trades - BooPlay"
+	description="Watch real-time virtual cryptocurrency trading activity in the Booplay simulation game. See live trades, user activity, and market movements as they happen."
 	keywords="live crypto trades game, real-time trading simulation, virtual trading activity, crypto game stream"
 />
 
 <svelte:head>
-	<title>Live Trades - XprismPlay</title>
-	<meta name="description" content="Real-time cryptocurrency trading activity on Rugplay" />
+	<title>Live Trades - BooPlay</title>
+	<meta name="description" content="Real-time cryptocurrency trading activity on Booplay" />
 </svelte:head>
 
 <div class="container mx-auto max-w-7xl p-6">

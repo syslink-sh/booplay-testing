@@ -1,20 +1,20 @@
-import { auth } from '$lib/auth';
 import { error } from '@sveltejs/kit';
+import { and, eq, lte } from 'drizzle-orm';
+import { auth } from '$lib/auth';
 import { db } from '$lib/server/db';
 import {
-	user,
-	transaction,
 	coin,
-	userPortfolio,
-	predictionBet,
-	predictionQuestion,
 	comment,
 	commentLike,
-	promoCodeRedemption,
+	predictionBet,
+	predictionQuestion,
 	promoCode,
-	session
+	promoCodeRedemption,
+	session,
+	transaction,
+	user,
+	userPortfolio
 } from '$lib/server/db/schema';
-import { eq, and, lte } from 'drizzle-orm';
 
 export async function HEAD({ request }) {
 	const authSession = await auth.api.getSession({
@@ -47,7 +47,7 @@ export async function HEAD({ request }) {
 		return new Response(null, {
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
-				'Content-Disposition': `attachment; filename="rugplay-data-${userId}-${new Date().toISOString().split('T')[0]}.json"`,
+				'Content-Disposition': `attachment; filename="booplay-data-${userId}-${new Date().toISOString().split('T')[0]}.json"`,
 				'Content-Length': estimatedSize.toString(),
 				'Cache-Control': 'no-cache, no-store, must-revalidate',
 				Pragma: 'no-cache',
@@ -228,7 +228,7 @@ export async function GET({ request }) {
 		return new Response(jsonData, {
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
-				'Content-Disposition': `attachment; filename="rugplay-data-${userId}-${new Date().toISOString().split('T')[0]}.json"`,
+				'Content-Disposition': `attachment; filename="booplay-data-${userId}-${new Date().toISOString().split('T')[0]}.json"`,
 				'Content-Length': dataSize.toString(),
 				'Cache-Control': 'no-cache, no-store, must-revalidate',
 				Pragma: 'no-cache',

@@ -1,82 +1,83 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
-	import { getTimeBasedGreeting, formatPrice, formatMarketCap } from '$lib/utils';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import SignInConfirmDialog from '$lib/components/self/SignInConfirmDialog.svelte';
-	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
-	import DataTable from '$lib/components/self/DataTable.svelte';
-	import HomeSkeleton from '$lib/components/self/skeletons/HomeSkeleton.svelte';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import { onMount } from 'svelte';
-	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
-	import { _ } from 'svelte-i18n';
-	let shouldSignIn = $state(false);
-	let coins = $state<any[]>([]);
-	let loading = $state(true);
+import { onMount } from "svelte";
+import { _ } from "svelte-i18n";
+import { toast } from "svelte-sonner";
+import { goto } from "$app/navigation";
+import CoinIcon from "$lib/components/self/CoinIcon.svelte";
+import DataTable from "$lib/components/self/DataTable.svelte";
+import SEO from "$lib/components/self/SEO.svelte";
+import SignInConfirmDialog from "$lib/components/self/SignInConfirmDialog.svelte";
+import HomeSkeleton from "$lib/components/self/skeletons/HomeSkeleton.svelte";
+import { Badge } from "$lib/components/ui/badge";
+import * as Card from "$lib/components/ui/card";
+import { USER_DATA } from "$lib/stores/user-data";
+import { formatMarketCap, formatPrice, getTimeBasedGreeting } from "$lib/utils";
 
-	onMount(async () => {
-		try {
-			const response = await fetch('/api/coins/top');
-			if (response.ok) {
-				const result = await response.json();
-				coins = result.coins;
-			} else {
-				toast.error('Failed to load coins');
-			}
-		} catch (e) {
-			console.error('Failed to fetch coins:', e);
-			toast.error('Failed to load coins');
-		} finally {
-			loading = false;
+const shouldSignIn = $state(false);
+let coins = $state<any[]>([]);
+let loading = $state(true);
+
+onMount(async () => {
+	try {
+		const response = await fetch("/api/coins/top");
+		if (response.ok) {
+			const result = await response.json();
+			coins = result.coins;
+		} else {
+			toast.error("Failed to load coins");
 		}
-	});
-	const marketColumns = [
-		{
-			key: 'name',
-			label: $_('global.name'),
-			class: 'font-medium',
-			render: (value: any, row: any) => {
-				return {
-					component: 'coin',
-					icon: row.icon,
-					symbol: row.symbol,
-					name: row.name,
-					size: 6
-				};
-			}
+	} catch (e) {
+		console.error("Failed to fetch coins:", e);
+		toast.error("Failed to load coins");
+	} finally {
+		loading = false;
+	}
+});
+const marketColumns = [
+	{
+		key: "name",
+		label: $_("global.name"),
+		class: "font-medium",
+		render: (value: any, row: any) => {
+			return {
+				component: "coin",
+				icon: row.icon,
+				symbol: row.symbol,
+				name: row.name,
+				size: 6,
+			};
 		},
-		{
-			key: 'price',
-			label: $_('global.price'),
-			render: (value: any) => `$${formatPrice(value)}`
-		},
-		{
-			key: 'change24h',
-			label: $_('coin.24hchange'),
-			render: (value: any) => ({
-				component: 'badge',
-				variant: value >= 0 ? 'success' : 'destructive',
-				text: `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`
-			})
-		},
-		{
-			key: 'marketCap',
-			label: $_('coin.marketcap'),
-			render: (value: any) => formatMarketCap(value)
-		},
-		{
-			key: 'volume24h',
-			label: $_('coin.volume24h'),
-			render: (value: any) => formatMarketCap(value)
-		}
-	];
+	},
+	{
+		key: "price",
+		label: $_("global.price"),
+		render: (value: any) => `$${formatPrice(value)}`,
+	},
+	{
+		key: "change24h",
+		label: $_("coin.24hchange"),
+		render: (value: any) => ({
+			component: "badge",
+			variant: value >= 0 ? "success" : "destructive",
+			text: `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`,
+		}),
+	},
+	{
+		key: "marketCap",
+		label: $_("coin.marketcap"),
+		render: (value: any) => formatMarketCap(value),
+	},
+	{
+		key: "volume24h",
+		label: $_("coin.volume24h"),
+		render: (value: any) => formatMarketCap(value),
+	},
+];
 </script>
 
 <SEO
-	title="XprismPlay"
-	description="A realistic crypto trading simulator based on Rugplay that lets you experience the risks and mechanics of decentralized exchanges without real financial consequences. Create coins, trade with liquidity pools, and learn about 'rug pulls' in a... relatively safe environment :)"
+	title="BooPlay"
+	description="A realistic crypto trading simulator based on Booplay that lets you experience the risks and mechanics of decentralized exchanges without real financial consequences. Create coins, trade with liquidity pools, and learn about 'rug pulls' in a... relatively safe environment :)"
 	keywords="crypto simulation game, trading practice game, rug pull simulation, virtual cryptocurrency game"
 />
 

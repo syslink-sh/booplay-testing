@@ -1,28 +1,28 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
-	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
-	import { Separator } from '$lib/components/ui/separator/index.js';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import NotificationsSkeleton from '$lib/components/self/skeletons/NotificationsSkeleton.svelte';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
+		Alert02Icon,
 		Notification01Icon,
 		Settings01Icon,
-		TradeUpIcon,
-		Alert02Icon,
-		Target03Icon
+		Target03Icon,
+		TradeUpIcon
 	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import { onMount } from 'svelte';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import SEO from '$lib/components/self/SEO.svelte';
+	import NotificationsSkeleton from '$lib/components/self/skeletons/NotificationsSkeleton.svelte';
+	import { Badge } from '$lib/components/ui/badge';
+	import * as Card from '$lib/components/ui/card';
+	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
+	import { Separator } from '$lib/components/ui/separator/index.js';
 	import {
-		NOTIFICATIONS,
 		fetchNotifications,
-		markNotificationsAsRead
+		markNotificationsAsRead,
+		NOTIFICATIONS
 	} from '$lib/stores/notifications';
 	import { USER_DATA } from '$lib/stores/user-data';
 	import { formatTimeAgo, formatValue } from '$lib/utils';
-	import { goto } from '$app/navigation';
-	import { toast } from 'svelte-sonner';
 	import NotificationItem from './NotificationItem.svelte';
 
 	let loading = $state(true);
@@ -96,8 +96,8 @@
 </script>
 
 <SEO
-	title="Notifications - XprismPlay"
-	description="View your notifications and updates from Rugplay."
+	title="Notifications - BooPlay"
+	description="View your notifications and updates from Booplay."
 />
 
 <div class="container mx-auto max-w-4xl p-6">

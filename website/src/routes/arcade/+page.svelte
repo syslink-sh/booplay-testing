@@ -1,81 +1,92 @@
 <script lang="ts">
-	import Coinflip from '$lib/components/self/games/Coinflip.svelte';
-	import Slots from '$lib/components/self/games/Slots.svelte';
-	import Mines from '$lib/components/self/games/Mines.svelte';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { PORTFOLIO_SUMMARY, fetchPortfolioSummary } from '$lib/stores/portfolio-data';
-	import SignInConfirmDialog from '$lib/components/self/SignInConfirmDialog.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import Dice from '$lib/components/self/games/Dice.svelte';
-	import Tower from '$lib/components/self/games/Tower.svelte';
-	import Blackjack from '$lib/components/self/games/Blackjack.svelte';
-	import HigherLower from '$lib/components/self/games/HigherLower.svelte';
-	import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '$lib/components/ui/card';
-	import { arcadeActivityStore } from '$lib/stores/websocket';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import * as HoverCard from '$lib/components/ui/hover-card';
-	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		Clock01Icon,
-		PiggyBankIcon,
-		CoinsDollarIcon,
-		StarsIcon,
-		BombIcon,
-		DiceIcon,
-		ElectricTower01Icon,
-		SpadesIcon,
-		CurvyUpDownDirectionIcon
-	} from '@hugeicons/core-free-icons';
-	import { formatValue, formatRelativeTime, getPublicUrl } from '$lib/utils';
-	import { goto } from '$app/navigation';
+import {
+	BombIcon,
+	Clock01Icon,
+	CoinsDollarIcon,
+	CurvyUpDownDirectionIcon,
+	DiceIcon,
+	ElectricTower01Icon,
+	PiggyBankIcon,
+	SpadesIcon,
+	StarsIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/svelte";
+import { goto } from "$app/navigation";
+import Blackjack from "$lib/components/self/games/Blackjack.svelte";
+import Coinflip from "$lib/components/self/games/Coinflip.svelte";
+import Dice from "$lib/components/self/games/Dice.svelte";
+import HigherLower from "$lib/components/self/games/HigherLower.svelte";
+import Mines from "$lib/components/self/games/Mines.svelte";
+import Slots from "$lib/components/self/games/Slots.svelte";
+import Tower from "$lib/components/self/games/Tower.svelte";
+import SEO from "$lib/components/self/SEO.svelte";
+import SignInConfirmDialog from "$lib/components/self/SignInConfirmDialog.svelte";
+import UserProfilePreview from "$lib/components/self/UserProfilePreview.svelte";
+import * as Avatar from "$lib/components/ui/avatar";
+import { Button } from "$lib/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "$lib/components/ui/card";
+import * as HoverCard from "$lib/components/ui/hover-card";
+import {
+	fetchPortfolioSummary,
+	PORTFOLIO_SUMMARY,
+} from "$lib/stores/portfolio-data";
+import { USER_DATA } from "$lib/stores/user-data";
+import { arcadeActivityStore } from "$lib/stores/websocket";
+import { formatRelativeTime, formatValue, getPublicUrl } from "$lib/utils";
 
-	const games = [
-		{ id: 'coinflip', label: 'Coinflip', icon: CoinsDollarIcon },
-		{ id: 'slots', label: 'Slots', icon: StarsIcon },
-		{ id: 'mines', label: 'Mines', icon: BombIcon },
-		{ id: 'dice', label: 'Dice', icon: DiceIcon },
-		{ id: 'tower', label: 'Tower', icon: ElectricTower01Icon },
-		{ id: 'blackjack', label: 'Blackjack', icon: SpadesIcon },
-		{ id: 'higherlower', label: 'Higher/Lower', icon: CurvyUpDownDirectionIcon }
-	];
+const games = [
+	{ id: "coinflip", label: "Coinflip", icon: CoinsDollarIcon },
+	{ id: "slots", label: "Slots", icon: StarsIcon },
+	{ id: "mines", label: "Mines", icon: BombIcon },
+	{ id: "dice", label: "Dice", icon: DiceIcon },
+	{ id: "tower", label: "Tower", icon: ElectricTower01Icon },
+	{ id: "blackjack", label: "Blackjack", icon: SpadesIcon },
+	{ id: "higherlower", label: "Higher/Lower", icon: CurvyUpDownDirectionIcon },
+];
 
-	let shouldSignIn = $state(false);
-	let balance = $state(0);
-	let activeGame = $state('coinflip');
+const shouldSignIn = $state(false);
+let balance = $state(0);
+const activeGame = $state("coinflip");
 
-	// Filter activities to only show bets >= $1000
-	const filteredActivities = $derived(
-		$arcadeActivityStore.filter((activity) => activity.amount >= 1000).slice(0, 10)
-	);
+// Filter activities to only show bets >= $1000
+const filteredActivities = $derived(
+	$arcadeActivityStore
+		.filter((activity) => activity.amount >= 1000)
+		.slice(0, 10),
+);
 
-	function handleBalanceUpdate(newBalance: number) {
-		balance = newBalance;
+function handleBalanceUpdate(newBalance: number) {
+	balance = newBalance;
 
-		if ($PORTFOLIO_SUMMARY) {
-			PORTFOLIO_SUMMARY.update((data) =>
-				data
-					? {
-							...data,
-							baseCurrencyBalance: newBalance,
-							totalValue: newBalance + data.totalCoinValue
-						}
-					: null
-			);
-		}
+	if ($PORTFOLIO_SUMMARY) {
+		PORTFOLIO_SUMMARY.update((data) =>
+			data
+				? {
+						...data,
+						baseCurrencyBalance: newBalance,
+						totalValue: newBalance + data.totalCoinValue,
+					}
+				: null,
+		);
 	}
+}
 
-	$effect(() => {
-		if ($USER_DATA && $PORTFOLIO_SUMMARY) {
-			balance = $PORTFOLIO_SUMMARY.baseCurrencyBalance;
-		}
-	});
+$effect(() => {
+	if ($USER_DATA && $PORTFOLIO_SUMMARY) {
+		balance = $PORTFOLIO_SUMMARY.baseCurrencyBalance;
+	}
+});
 </script>
 
 <SEO
-	title="Arcade - XprismPlay"
-	description="Play virtual arcade games with simulated currency in Rugplay. Try coinflip, slots, and mines games using virtual money with no real-world value - purely for entertainment."
+	title="Arcade - BooPlay"
+	description="Play virtual arcade games with simulated currency in Booplay. Try coinflip, slots, and mines games using virtual money with no real-world value - purely for entertainment."
 	keywords="virtual arcade simulation, coinflip game, slots game, mines game, virtual arcade, simulated games, entertainment games"
 />
 

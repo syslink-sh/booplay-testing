@@ -1,134 +1,155 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import { Separator } from '$lib/components/ui/separator';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		InformationCircleIcon,
-		Loading03Icon,
-		Coins01Icon,
-		ImageAdd01Icon
-	} from '@hugeicons/core-free-icons';
-	import { PORTFOLIO_SUMMARY, fetchPortfolioData } from '$lib/stores/portfolio-data';
-	import { onMount } from 'svelte';
-	import { CREATION_FEE, INITIAL_LIQUIDITY, TOTAL_COST } from '$lib/data/constants';
-	import { toast } from 'svelte-sonner';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import SignInConfirmDialog from '$lib/components/self/SignInConfirmDialog.svelte';
-	import { haptic } from '$lib/stores/haptics';
+import {
+	Coins01Icon,
+	ImageAdd01Icon,
+	InformationCircleIcon,
+	Loading03Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/svelte";
+import { onMount } from "svelte";
+import { toast } from "svelte-sonner";
+import { goto } from "$app/navigation";
+import SEO from "$lib/components/self/SEO.svelte";
+import SignInConfirmDialog from "$lib/components/self/SignInConfirmDialog.svelte";
+import { Alert, AlertDescription } from "$lib/components/ui/alert";
+import { Button } from "$lib/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "$lib/components/ui/card";
+import { Input } from "$lib/components/ui/input";
+import { Label } from "$lib/components/ui/label";
+import { Separator } from "$lib/components/ui/separator";
+import {
+	CREATION_FEE,
+	INITIAL_LIQUIDITY,
+	TOTAL_COST,
+} from "$lib/data/constants";
+import { haptic } from "$lib/stores/haptics";
+import {
+	fetchPortfolioData,
+	PORTFOLIO_SUMMARY,
+} from "$lib/stores/portfolio-data";
 
-	let name = $state('');
-	let symbol = $state('');
-	let iconFile = $state<File | null>(null);
-	let iconPreview = $state<string | null>(null);
-	let isSubmitting = $state(false);
-	let error = $state('');
+const name = $state("");
+const symbol = $state("");
+let iconFile = $state<File | null>(null);
+let iconPreview = $state<string | null>(null);
+let isSubmitting = $state(false);
+let error = $state("");
 
-	onMount(() => {
-		fetchPortfolioData();
-	});
+onMount(() => {
+	fetchPortfolioData();
+});
 
-	let nameError = $derived(
-		name.length > 0 && (name.length < 2 || name.length > 45)
-			? 'Name must be between 2 and 45 characters'
-			: ''
-	);
+const nameError = $derived(
+	name.length > 0 && (name.length < 2 || name.length > 45)
+		? "Name must be between 2 and 45 characters"
+		: "",
+);
 
-	let symbolError = $derived(
-		symbol.length > 0 && (symbol.length < 2 || symbol.length > 16)
-			? 'Symbol must be between 2 and 16 characters'
-			: ''
-	);
+const symbolError = $derived(
+	symbol.length > 0 && (symbol.length < 2 || symbol.length > 16)
+		? "Symbol must be between 2 and 16 characters"
+		: "",
+);
 
-	let iconError = $derived(
-		iconFile && iconFile.size > 1 * 1024 * 1024 ? 'Icon must be smaller than 1MB' : ''
-	);
+const iconError = $derived(
+	iconFile && iconFile.size > 1 * 1024 * 1024
+		? "Icon must be smaller than 1MB"
+		: "",
+);
 
-	let isFormValid = $derived(
-		name.length >= 2 && symbol.length >= 2 && !nameError && !symbolError && !iconError
-	);
+const isFormValid = $derived(
+	name.length >= 2 &&
+		symbol.length >= 2 &&
+		!nameError &&
+		!symbolError &&
+		!iconError,
+);
 
-	let hasEnoughFunds = $derived(
-		$PORTFOLIO_SUMMARY ? $PORTFOLIO_SUMMARY.baseCurrencyBalance >= TOTAL_COST : false
-	);
+const hasEnoughFunds = $derived(
+	$PORTFOLIO_SUMMARY
+		? $PORTFOLIO_SUMMARY.baseCurrencyBalance >= TOTAL_COST
+		: false,
+);
 
-	let canSubmit = $derived(isFormValid && hasEnoughFunds && !isSubmitting);
+const canSubmit = $derived(isFormValid && hasEnoughFunds && !isSubmitting);
 
-	function handleIconChange(event: Event) {
-		const target = event.target as HTMLInputElement;
-		const file = target.files?.[0];
+function handleIconChange(event: Event) {
+	const target = event.target as HTMLInputElement;
+	const file = target.files?.[0];
 
-		if (file) {
-			if (file.type.startsWith('image/')) {
-				iconFile = file;
-				console.log(iconFile.size);
-				const reader = new FileReader();
-				reader.onload = (e) => {
-					iconPreview = e.target?.result as string;
-				};
-				reader.readAsDataURL(file);
-			} else {
-				error = 'Please select a valid image file';
-				target.value = '';
-			}
+	if (file) {
+		if (file.type.startsWith("image/")) {
+			iconFile = file;
+			console.log(iconFile.size);
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				iconPreview = e.target?.result as string;
+			};
+			reader.readAsDataURL(file);
 		} else {
-			iconFile = null;
-			iconPreview = null;
+			error = "Please select a valid image file";
+			target.value = "";
 		}
+	} else {
+		iconFile = null;
+		iconPreview = null;
 	}
+}
 
-	async function handleSubmit(event: { preventDefault: () => void }) {
-		event.preventDefault();
+async function handleSubmit(event: { preventDefault: () => void }) {
+	event.preventDefault();
 
-		if (!canSubmit) return;
+	if (!canSubmit) return;
 
-		isSubmitting = true;
-		error = '';
+	isSubmitting = true;
+	error = "";
 
-		try {
-			const formData = new FormData();
-			formData.append('name', name);
-			formData.append('symbol', symbol.toUpperCase());
+	try {
+		const formData = new FormData();
+		formData.append("name", name);
+		formData.append("symbol", symbol.toUpperCase());
 
-			if (iconFile) {
-				formData.append('icon', iconFile);
-			}
-
-			const response = await fetch('/api/coin/create', {
-				method: 'POST',
-				body: formData
-			});
-
-			const result = await response.json();
-
-			if (!response.ok) {
-				throw new Error(result.message || 'Failed to create coin');
-			}
-
-			await fetchPortfolioData();
-
-			haptic.trigger('success');
-			goto(`/coin/${result.coin.symbol}`);
-		} catch (e) {
-			haptic.trigger('error');
-			toast.error('Failed to create coin', {
-				description: (e as Error).message || 'An error occurred while creating the coin'
-			});
-		} finally {
-			isSubmitting = false;
+		if (iconFile) {
+			formData.append("icon", iconFile);
 		}
-	}
 
-	let shouldSignIn = $state(false);
+		const response = await fetch("/api/coin/create", {
+			method: "POST",
+			body: formData,
+		});
+
+		const result = await response.json();
+
+		if (!response.ok) {
+			throw new Error(result.message || "Failed to create coin");
+		}
+
+		await fetchPortfolioData();
+
+		haptic.trigger("success");
+		goto(`/coin/${result.coin.symbol}`);
+	} catch (e) {
+		haptic.trigger("error");
+		toast.error("Failed to create coin", {
+			description:
+				(e as Error).message || "An error occurred while creating the coin",
+		});
+	} finally {
+		isSubmitting = false;
+	}
+}
+
+const shouldSignIn = $state(false);
 </script>
 
 <SEO
-	title="Create Coin - XprismPlay"
-	description="Launch your own virtual cryptocurrency in the Rugplay simulation game. Create coins with custom names, symbols, and icons."
+	title="Create Coin - BooPlay"
+	description="Launch your own virtual cryptocurrency in the Booplay simulation game. Create coins with custom names, symbols, and icons."
 	keywords="create virtual cryptocurrency, coin creation game, launch crypto simulation, virtual token creation, cryptocurrency game creator"
 />
 

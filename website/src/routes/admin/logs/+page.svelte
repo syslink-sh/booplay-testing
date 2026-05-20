@@ -1,19 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { adminLogStore, type AdminLogEntry } from '$lib/stores/websocket';
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
-		Shield01Icon,
+		Cancel01Icon,
 		LegalHammerIcon,
-		UserCheck01Icon,
+		Shield01Icon,
 		Ticket01Icon,
-		Cancel01Icon
+		UserCheck01Icon
 	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import { onMount } from 'svelte';
+	import { Badge } from '$lib/components/ui/badge';
+	import * as Card from '$lib/components/ui/card';
+	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { hasFlag, UserFlags } from '$lib/data/flags';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import { type AdminLogEntry, adminLogStore } from '$lib/stores/websocket';
 
 	let historicalLogs = $state<AdminLogEntry[]>([]);
 	let isLoading = $state(true);
@@ -22,7 +22,7 @@
 	const LIMIT = 25;
 
 	// Merge live logs from websocket store with historical, deduplicating by id
-	let allLogs = $derived.by(() => {
+	const allLogs = $derived.by(() => {
 		const live = $adminLogStore;
 		const merged = [...live];
 		for (const log of historicalLogs) {
@@ -106,7 +106,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Logs | XprismPlay</title>
+	<title>Admin Logs | BooPlay</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

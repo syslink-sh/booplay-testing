@@ -1,46 +1,46 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
+	import {
+		Activity01Icon,
+		Award05Icon,
+		Calendar01Icon,
+		ClockIcon,
+		Coins01Icon,
+		Globe02Icon,
+		Invoice03Icon,
+		Locker01Icon,
+		PercentIcon,
+		TradeDownIcon,
+		TradeUpIcon,
+		UnavailableIcon,
+		UserGroupIcon,
+		Wallet01Icon
+	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import { onMount } from 'svelte';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import DataTable from '$lib/components/self/DataTable.svelte';
+	import ProfileBadges from '$lib/components/self/ProfileBadges.svelte';
+	import SEO from '$lib/components/self/SEO.svelte';
+	import ProfileSkeleton from '$lib/components/self/skeletons/ProfileSkeleton.svelte';
+	import UserName from '$lib/components/self/UserName.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
-	import DataTable from '$lib/components/self/DataTable.svelte';
-	import ProfileBadges from '$lib/components/self/ProfileBadges.svelte';
-	import UserName from '$lib/components/self/UserName.svelte';
-	import ProfileSkeleton from '$lib/components/self/skeletons/ProfileSkeleton.svelte';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import { getPublicUrl, formatPrice, formatValue, formatQuantity, formatDate } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { toast } from 'svelte-sonner';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		Calendar01Icon,
-		Wallet01Icon,
-		TradeUpIcon,
-		TradeDownIcon,
-		Coins01Icon,
-		Activity01Icon,
-		PercentIcon,
-		Invoice03Icon,
-		Award05Icon,
-		UnavailableIcon,
-		ClockIcon,
-		UserGroupIcon,
-		Globe02Icon,
-		Locker01Icon
-	} from '@hugeicons/core-free-icons';
-	import { goto } from '$app/navigation';
-	import { USER_DATA } from '$lib/stores/user-data';
+	import * as Card from '$lib/components/ui/card';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { haptic } from '$lib/stores/haptics';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import { formatDate, formatPrice, formatQuantity, formatValue, getPublicUrl } from '$lib/utils';
 	import { formatTimezone, getTimezoneDate } from '$lib/utils/timezones.js';
 
-	let { data } = $props();
-	let username = $derived(data.username);
+	const { data } = $props();
+	const username = $derived(data.username);
 
 	let profileData = $state(data.profileData);
 	let recentTransactions = $state(data.recentTransactions);
 	let loading = $state(false);
-	let usersTimezone = getTimezoneDate(profileData?.profile?.timezone);
+	const usersTimezone = getTimezoneDate(profileData?.profile?.timezone);
 	let userAchievements = $state<any[]>([]);
 	let userGroups = $state<any[]>([]);
 	let groupsLoading = $state(false);
@@ -52,7 +52,7 @@
 		recentTransactions = data.recentTransactions;
 	});
 
-	let isOwnProfile = $derived(
+	const isOwnProfile = $derived(
 		$USER_DATA && profileData?.profile && $USER_DATA.username === profileData.profile.username
 	);
 
@@ -167,7 +167,7 @@
 		} catch {}
 	}
 
-	let memberSince = $derived(
+	const memberSince = $derived(
 		profileData?.profile
 			? new Date(profileData.profile.createdAt).toLocaleDateString('en-US', {
 					year: 'numeric',
@@ -175,56 +175,56 @@
 				})
 			: ''
 	);
-	let hasCreatedCoins = $derived(
+	const hasCreatedCoins = $derived(
 		profileData?.createdCoins?.length ? profileData.createdCoins.length > 0 : false
 	);
-	let totalTradingVolume = $derived(
+	const totalTradingVolume = $derived(
 		profileData?.stats
 			? Number(profileData.stats.totalBuyVolume) + Number(profileData.stats.totalSellVolume)
 			: 0
 	);
-	let buyPercentage = $derived(
+	const buyPercentage = $derived(
 		profileData?.stats && totalTradingVolume > 0
 			? (Number(profileData.stats.totalBuyVolume) / totalTradingVolume) * 100
 			: 0
 	);
-	let sellPercentage = $derived(
+	const sellPercentage = $derived(
 		profileData?.stats && totalTradingVolume > 0
 			? (Number(profileData.stats.totalSellVolume) / totalTradingVolume) * 100
 			: 0
 	);
-	let totalPortfolioValue = $derived(
+	const totalPortfolioValue = $derived(
 		profileData?.stats?.totalPortfolioValue ? Number(profileData.stats.totalPortfolioValue) : 0
 	);
-	let baseCurrencyBalance = $derived(
+	const baseCurrencyBalance = $derived(
 		profileData?.stats?.baseCurrencyBalance ? Number(profileData.stats.baseCurrencyBalance) : 0
 	);
-	let holdingsValue = $derived(
+	const holdingsValue = $derived(
 		profileData?.stats?.holdingsValue ? Number(profileData.stats.holdingsValue) : 0
 	);
-	let totalBuyVolume = $derived(
+	const totalBuyVolume = $derived(
 		profileData?.stats?.totalBuyVolume ? Number(profileData.stats.totalBuyVolume) : 0
 	);
-	let totalSellVolume = $derived(
+	const totalSellVolume = $derived(
 		profileData?.stats?.totalSellVolume ? Number(profileData.stats.totalSellVolume) : 0
 	);
-	let buyVolume24h = $derived(
+	const buyVolume24h = $derived(
 		profileData?.stats?.buyVolume24h ? Number(profileData.stats.buyVolume24h) : 0
 	);
-	let sellVolume24h = $derived(
+	const sellVolume24h = $derived(
 		profileData?.stats?.sellVolume24h ? Number(profileData.stats.sellVolume24h) : 0
 	);
-	let totalTradingVolumeAllTime = $derived(totalBuyVolume + totalSellVolume);
-	let totalTradingVolume24h = $derived(buyVolume24h + sellVolume24h);
-	let arcadeWins = $derived(
+	const totalTradingVolumeAllTime = $derived(totalBuyVolume + totalSellVolume);
+	const totalTradingVolume24h = $derived(buyVolume24h + sellVolume24h);
+	const arcadeWins = $derived(
 		profileData?.profile?.arcadeWins ? Number(profileData.profile.arcadeWins) : 0
 	);
-	let arcadeLosses = $derived(
+	const arcadeLosses = $derived(
 		profileData?.profile?.arcadeLosses ? Number(profileData.profile.arcadeLosses) : 0
 	);
-	let totalPlayed = $derived(arcadeWins + arcadeLosses);
-	let netProfit = $derived(arcadeWins - arcadeLosses);
-	let winRate = $derived(totalPlayed > 0 ? ((arcadeWins / totalPlayed) * 100).toFixed(1) : '0.0');
+	const totalPlayed = $derived(arcadeWins + arcadeLosses);
+	const netProfit = $derived(arcadeWins - arcadeLosses);
+	const winRate = $derived(totalPlayed > 0 ? ((arcadeWins / totalPlayed) * 100).toFixed(1) : '0.0');
 
 	const ROLE_VARIANT: Record<string, string> = {
 		owner: 'default',
@@ -413,7 +413,11 @@
 					row.isTransfer || row.type === 'TRANSFER_IN' || row.type === 'TRANSFER_OUT';
 				if (!isTransfer || !v)
 					return { component: 'text', text: '-', class: 'text-muted-foreground' };
-				return { component: 'text', text: v, class: 'text-sm italic truncate max-w-[180px]' };
+				return {
+					component: 'text',
+					text: v,
+					class: 'text-sm italic truncate max-w-[180px]'
+				};
 			}
 		}
 	];
@@ -421,11 +425,11 @@
 
 <SEO
 	title={profileData?.profile?.name
-		? `${profileData.profile.name} (@${profileData.profile.username}) - XprismPlay`
-		: `@${username} - XprismPlay`}
+		? `${profileData.profile.name} (@${profileData.profile.username}) - BooPlay`
+		: `@${username} - BooPlay`}
 	description={profileData?.profile?.bio
-		? `${profileData.profile.bio} - View ${profileData.profile.name}'s simulated trading activity and virtual portfolio in the Rugplay cryptocurrency simulation game.`
-		: `View @${username}'s profile and simulated trading activity in Rugplay - cryptocurrency trading simulation game platform.`}
+		? `${profileData.profile.bio} - View ${profileData.profile.name}'s simulated trading activity and virtual portfolio in the Booplay cryptocurrency simulation game.`
+		: `View @${username}'s profile and simulated trading activity in Booplay - cryptocurrency trading simulation game platform.`}
 	type="profile"
 	image={profileData?.profile?.image
 		? getPublicUrl(profileData.profile.image)

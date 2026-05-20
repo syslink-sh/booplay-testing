@@ -1,33 +1,33 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Popover from '$lib/components/ui/popover';
-	import * as Pagination from '$lib/components/ui/pagination';
-	import * as Select from '$lib/components/ui/select';
-	import * as Table from '$lib/components/ui/table';
-	import { Input } from '$lib/components/ui/input';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Label } from '$lib/components/ui/label';
-	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
-	import SEO from '$lib/components/self/SEO.svelte';
+	import {
+		ArrowDown01Icon,
+		ArrowLeft01Icon,
+		ArrowRight01Icon,
+		FileEditIcon,
+		Invoice03Icon,
+		ReceiptDollarIcon,
+		Refresh01Icon,
+		Search01Icon,
+		SlidersHorizontalIcon
+	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import { onMount } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		Search01Icon,
-		Refresh01Icon,
-		SlidersHorizontalIcon,
-		ArrowLeft01Icon,
-		ArrowRight01Icon,
-		ReceiptDollarIcon,
-		Invoice03Icon,
-		ArrowDown01Icon,
-		FileEditIcon
-	} from '@hugeicons/core-free-icons';
-	import { formatPrice, formatValue, formatQuantity, formatDate, debounce } from '$lib/utils';
-	import { MediaQuery } from 'svelte/reactivity';
+	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
+	import SEO from '$lib/components/self/SEO.svelte';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import * as Pagination from '$lib/components/ui/pagination';
+	import * as Popover from '$lib/components/ui/popover';
+	import * as Select from '$lib/components/ui/select';
+	import * as Table from '$lib/components/ui/table';
+	import { debounce, formatDate, formatPrice, formatQuantity, formatValue } from '$lib/utils';
 
 	let transactions = $state<any[]>([]);
 	let totalCount = $state(0);
@@ -51,8 +51,8 @@
 	}
 
 	const isDesktop = new MediaQuery('(min-width: 768px)');
-	let perPage = $derived(isDesktop.current ? 20 : 15);
-	let siblingCount = $derived(isDesktop.current ? 1 : 0);
+	const perPage = $derived(isDesktop.current ? 20 : 15);
+	const siblingCount = $derived(isDesktop.current ? 1 : 0);
 
 	const typeFilterOptions = [
 		{ value: 'all', label: 'All transactions' },
@@ -204,13 +204,13 @@
 		showFilterPopover = false;
 	}
 
-	let hasActiveFilters = $derived(
+	const hasActiveFilters = $derived(
 		searchQuery !== '' || typeFilter !== 'all' || sortBy !== 'timestamp' || sortOrder !== 'desc'
 	);
 
-	let totalPages = $derived(Math.ceil(totalCount / perPage));
-	let startIndex = $derived((currentPage - 1) * perPage + 1);
-	let endIndex = $derived(Math.min(currentPage * perPage, totalCount));
+	const totalPages = $derived(Math.ceil(totalCount / perPage));
+	const startIndex = $derived((currentPage - 1) * perPage + 1);
+	const endIndex = $derived(Math.min(currentPage * perPage, totalCount));
 
 	function handlePageChange(page: number) {
 		currentPage = page;
@@ -218,17 +218,17 @@
 		fetchTransactions();
 	}
 
-	let currentTypeFilterLabel = $derived(
+	const currentTypeFilterLabel = $derived(
 		typeFilterOptions.find((option) => option.value === typeFilter)?.label || 'All transactions'
 	);
-	let currentSortOrderLabel = $derived(
+	const currentSortOrderLabel = $derived(
 		sortOrderOptions.find((option) => option.value === sortOrder)?.label || 'Newest first'
 	);
 </script>
 
 <SEO
-	title="Transactions - XprismPlay"
-	description="View your complete trading history and transaction records in the Rugplay cryptocurrency simulation game."
+	title="Transactions - BooPlay"
+	description="View your complete trading history and transaction records in the Booplay cryptocurrency simulation game."
 	noindex={true}
 	keywords="trading history game, transaction records simulator, crypto trading log, virtual trading history"
 />

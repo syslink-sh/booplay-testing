@@ -670,7 +670,9 @@ export const lotteryDraw = pgTable(
 		drawDate: timestamp('draw_date', { withTimezone: true }).notNull(),
 		prizePool: decimal('prize_pool', { precision: 30, scale: 8 }).notNull().default('0'),
 		ticketRevenue: decimal('ticket_revenue', { precision: 30, scale: 8 }).notNull().default('0'),
-		bankContribution: decimal('bank_contribution', { precision: 30, scale: 8 }).notNull().default('0'),
+		bankContribution: decimal('bank_contribution', { precision: 30, scale: 8 })
+			.notNull()
+			.default('0'),
 		donations: decimal('donations', { precision: 30, scale: 8 }).notNull().default('0'),
 		rolloverAmount: decimal('rollover_amount', { precision: 30, scale: 8 }).notNull().default('0'),
 		totalTickets: integer('total_tickets').notNull().default(0),
@@ -691,8 +693,12 @@ export const lotteryTicket = pgTable(
 	'lottery_ticket',
 	{
 		id: serial('id').primaryKey(),
-		drawId: integer('draw_id').notNull().references(() => lotteryDraw.id, { onDelete: 'cascade' }),
-		userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+		drawId: integer('draw_id')
+			.notNull()
+			.references(() => lotteryDraw.id, { onDelete: 'cascade' }),
+		userId: integer('user_id')
+			.notNull()
+			.references(() => user.id, { onDelete: 'cascade' }),
 		quantity: integer('quantity').notNull().default(1),
 		purchasedAt: timestamp('purchased_at', { withTimezone: true }).notNull().defaultNow()
 	},

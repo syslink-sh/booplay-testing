@@ -30,13 +30,13 @@
 		clickCount = 0;
 	}
 
-	let tooltipMessage = $derived(
+	const tooltipMessage = $derived(
 		clickCount >= 15 ? 'ok you win' : clickCount >= 3 ? 'stop clicking' : 'ts pmo too icl'
 	);
 </script>
 
 <svelte:head>
-	<title>{status} | XprismPlay</title>
+	<title>{status} | BooPlay</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 

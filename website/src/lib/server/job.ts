@@ -1,23 +1,23 @@
+import { and, eq, isNull, lte } from 'drizzle-orm';
+import { env } from '$env/dynamic/private';
+import { getBooplayData, resolveQuestion } from '$lib/server/ai';
 import { db } from '$lib/server/db';
 import {
-	predictionQuestion,
-	predictionBet,
-	user,
-	accountDeletionRequest,
-	session,
 	account,
-	promoCodeRedemption,
-	userPortfolio,
-	commentLike,
+	accountDeletionRequest,
+	coin,
 	comment,
+	commentLike,
+	predictionBet,
+	predictionQuestion,
+	promoCodeRedemption,
+	session,
 	transaction,
-	coin
+	user,
+	userPortfolio
 } from '$lib/server/db/schema';
-import { eq, and, lte, isNull } from 'drizzle-orm';
-import { resolveQuestion, getRugplayData } from '$lib/server/ai';
 import { createNotification } from '$lib/server/notification';
 import { formatValue } from '$lib/utils';
-import { env } from '$env/dynamic/private';
 
 export async function resolveExpiredQuestions() {
 	const now = new Date();
@@ -46,16 +46,16 @@ export async function resolveExpiredQuestions() {
 			try {
 				console.log(`Resolving question: ${question.question}`);
 
-				const rugplayData = await getRugplayData(question.question);
+				const booplayData = await getBooplayData(question.question);
 				const resolution = await resolveQuestion(
 					question.question,
 					question.requiresWebSearch,
-					rugplayData
+					booplayData
 				);
 				console.log('Resolution result:', resolution);
 				if (env.DISCORD_WEBHOOK_URL) {
-			// Formatting it exactly like your console output
-				const discordMessage = `\`\`\`text
+					// Formatting it exactly like your console output
+					const discordMessage = `\`\`\`text
 Resolving question: ${question.question}
 Resolution result: {
   resolution: ${resolution.resolution},
@@ -63,16 +63,16 @@ Resolution result: {
   reasoning: "${resolution.reasoning}"
 }
 \`\`\``;
-				try {
-				await fetch(env.DISCORD_WEBHOOK_URL, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ content: discordMessage })
-				});
-				} catch (err) {
-					console.error('Failed to send Hopium resolution to Discord:', err);
+					try {
+						await fetch(env.DISCORD_WEBHOOK_URL, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ content: discordMessage })
+						});
+					} catch (err) {
+						console.error('Failed to send Hopium resolution to Discord:', err);
+					}
 				}
-			}
 
 				if (resolution.confidence < 50) {
 					console.log(

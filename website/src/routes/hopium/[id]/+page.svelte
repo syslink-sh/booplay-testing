@@ -1,34 +1,34 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import * as Card from '$lib/components/ui/card';
-	import * as HoverCard from '$lib/components/ui/hover-card';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Badge } from '$lib/components/ui/badge';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Separator } from '$lib/components/ui/separator';
-	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
-	import UserName from '$lib/components/self/UserName.svelte';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
-		Loading03Icon,
 		Calculator01Icon,
-		TransactionHistoryIcon,
+		Cancel01Icon,
 		ChartColumnIcon,
+		Loading03Icon,
 		MessageQuestionIcon,
 		Tick01Icon,
-		Cancel01Icon
+		TransactionHistoryIcon
 	} from '@hugeicons/core-free-icons';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { PORTFOLIO_SUMMARY, fetchPortfolioSummary } from '$lib/stores/portfolio-data';
-	import { toast } from 'svelte-sonner';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import { ColorType, createChart, type IChartApi, LineSeries } from 'lightweight-charts';
 	import { onMount } from 'svelte';
-	import { formatDateWithYear, getPublicUrl, formatTimeUntil } from '$lib/utils';
-	import { createChart, ColorType, type IChartApi, LineSeries } from 'lightweight-charts';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import SEO from '$lib/components/self/SEO.svelte';
 	import HopiumQuestionSkeleton from '$lib/components/self/skeletons/HopiumQuestionSkeleton.svelte';
+	import UserName from '$lib/components/self/UserName.svelte';
+	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import * as HoverCard from '$lib/components/ui/hover-card';
+	import { Input } from '$lib/components/ui/input';
+	import { Separator } from '$lib/components/ui/separator';
 	import { haptic } from '$lib/stores/haptics';
+	import { fetchPortfolioSummary, PORTFOLIO_SUMMARY } from '$lib/stores/portfolio-data';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import { formatDateWithYear, formatTimeUntil, getPublicUrl } from '$lib/utils';
 
 	const { data } = $props();
 	let question = $state(data.question);
@@ -36,12 +36,12 @@
 	let probabilityData = $state(data.probabilityData);
 
 	// Betting form
-	let betSide = $state<boolean>(true);
+	const betSide = $state<boolean>(true);
 	let placingBet = $state(false);
 	let customBetAmount = $state('');
 
-	let userBalance = $derived($PORTFOLIO_SUMMARY ? $PORTFOLIO_SUMMARY.baseCurrencyBalance : 0);
-	let questionId = $derived(data.questionId);
+	const userBalance = $derived($PORTFOLIO_SUMMARY ? $PORTFOLIO_SUMMARY.baseCurrencyBalance : 0);
+	const questionId = $derived(data.questionId);
 
 	$effect(() => {
 		question = data.question;
@@ -49,7 +49,7 @@
 	});
 
 	// Chart related
-	let chartContainer = $state<HTMLDivElement>();
+	const chartContainer = $state<HTMLDivElement>();
 	let chart: IChartApi | null = null;
 	let lineSeries: any = null;
 
@@ -149,8 +149,20 @@
 				},
 				crosshair: {
 					mode: 1,
-					vertLine: { color: '#758696', width: 1, style: 2, visible: true, labelVisible: true },
-					horzLine: { color: '#758696', width: 1, style: 2, visible: true, labelVisible: true }
+					vertLine: {
+						color: '#758696',
+						width: 1,
+						style: 2,
+						visible: true,
+						labelVisible: true
+					},
+					horzLine: {
+						color: '#758696',
+						width: 1,
+						style: 2,
+						visible: true,
+						labelVisible: true
+					}
 				}
 			});
 
@@ -180,19 +192,19 @@
 		}
 	});
 
-	let estimatedYesPayout = $derived(
+	const estimatedYesPayout = $derived(
 		!question?.userBets?.yesAmount || question.userBets.yesAmount <= 0
 			? 0
 			: question.userBets.estimatedYesWinnings || 0
 	);
 
-	let estimatedNoPayout = $derived(
+	const estimatedNoPayout = $derived(
 		!question?.userBets?.noAmount || question.userBets.noAmount <= 0
 			? 0
 			: question.userBets.estimatedNoWinnings || 0
 	);
 
-	let estimatedWin = $derived(
+	const estimatedWin = $derived(
 		(() => {
 			const amount = Number(customBetAmount);
 			if (!amount || amount <= 0 || !question) return 0;
@@ -207,11 +219,11 @@
 
 <SEO
 	title={question
-		? `${question.question} - Hopium - XprismPlay`
-		: 'Loading Question - Hopium - XprismPlay'}
+		? `${question.question} - Hopium - BooPlay`
+		: 'Loading Question - Hopium - BooPlay'}
 	description={question
-		? `Predict "${question.question}" in Rugplay's AI-powered prediction market. Current odds: ${question.yesPercentage.toFixed(1)}% YES, ${question.noPercentage.toFixed(1)}% NO. Total volume: $${question.totalAmount.toFixed(2)}.`
-		: 'AI-powered prediction market question in the Rugplay simulation game.'}
+		? `Predict "${question.question}" in Booplay's AI-powered prediction market. Current odds: ${question.yesPercentage.toFixed(1)}% YES, ${question.noPercentage.toFixed(1)}% NO. Total volume: $${question.totalAmount.toFixed(2)}.`
+		: 'AI-powered prediction market question in the Booplay simulation game.'}
 	keywords="AI prediction market question, virtual prediction, cryptocurrency prediction game, yes no prediction, forecasting simulation"
 />
 

@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { USER_DATA } from '$lib/stores/user-data';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
-		Shield01Icon,
-		LegalHammerIcon,
-		Ticket01Icon,
+		Analytics01Icon,
 		ArrowRight01Icon,
-		UserGroupIcon,
-		Analytics01Icon
+		LegalHammerIcon,
+		Shield01Icon,
+		Ticket01Icon,
+		UserGroupIcon
 	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import { goto } from '$app/navigation';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
 	import { hasFlag } from '$lib/data/flags';
+	import { USER_DATA } from '$lib/stores/user-data';
 
 	const adminSections = [
 		{
@@ -47,7 +47,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Panel of XprismPlay</title>
+	<title>Admin Panel of BooPlay</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

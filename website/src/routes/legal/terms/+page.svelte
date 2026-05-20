@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { Separator } from '$lib/components/ui/separator';
+	import { Alert02Icon, JusticeScale01Icon, TradeDownIcon } from '@hugeicons/core-free-icons';
 	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import { JusticeScale01Icon, Alert02Icon, TradeDownIcon } from '@hugeicons/core-free-icons';
-	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import * as Alert from '$lib/components/ui/alert';
 	import { goto } from '$app/navigation';
 	import SEO from '$lib/components/self/SEO.svelte';
+	import * as Alert from '$lib/components/ui/alert';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import { Separator } from '$lib/components/ui/separator';
 
-	const LAST_UPDATED = 'February 21, 2026';
-	const CONTACT_EMAIL = 'contact@outpoot.com';
-	const MINIMUM_AGE = 13;
+	const LAST_UPDATED = 'May 20, 2026';
+	const CONTACT_EMAIL = 'me.boongie@proton.me';
+	const MINIMUM_AGE = 16;
 </script>
 
 <SEO
-	title="Terms of Service - XprismPlay"
-	description="Terms of Service for Rugplay - cryptocurrency trading simulation game. Learn about virtual currency, rug pull mechanics, arcade features, and platform rules."
+	title="Terms of Service - BooPlay"
+	description="Terms of Service for Booplay - cryptocurrency trading simulation game. Learn about virtual currency, rug pull mechanics, arcade features, and platform rules."
 	keywords="terms of service, legal terms, simulation game rules, virtual currency terms, rug pull simulation"
 />
 
@@ -35,7 +35,7 @@
 			<HugeiconsIcon icon={TradeDownIcon} class="h-4 w-4" />
 			<Alert.Title>Virtual Currency Simulation Only</Alert.Title>
 			<Alert.Description>
-				Rugplay uses only virtual currency (*BUSS or "$") with no real monetary value. All trading,
+				Booplay uses only virtual currency (*BUSS or "$") with no real monetary value. All trading,
 				including rug pulls, is simulated for educational purposes only.
 			</Alert.Description>
 		</Alert.Root>
@@ -46,12 +46,12 @@
 			<Card.Content>
 				<h2 class="mb-4 text-2xl font-semibold">1. Acceptance of Terms</h2>
 				<p class="mb-4">
-					By accessing and using Rugplay ("the Platform", "we", "us", "our"), you accept and agree
+					By accessing and using Booplay ("the Platform", "we", "us", "our"), you accept and agree
 					to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you
 					may not use the Platform.
 				</p>
 				<p>
-					These Terms constitute a legally binding agreement between you and Rugplay regarding your
+					These Terms constitute a legally binding agreement between you and Booplay regarding your
 					use of our cryptocurrency trading simulation platform.
 				</p>
 			</Card.Content>
@@ -60,7 +60,7 @@
 				<h2 class="mb-4 text-2xl font-semibold">2. Platform Description</h2>
 				<div class="space-y-4">
 					<p>
-						Rugplay is a <strong>simulated cryptocurrency trading platform</strong> designed for educational
+						Booplay is a <strong>simulated cryptocurrency trading platform</strong> designed for educational
 						and entertainment purposes. The Platform allows users to:
 					</p>
 					<ul class="ml-6 list-disc space-y-2">
@@ -76,7 +76,7 @@
 						<HugeiconsIcon icon={Alert02Icon} class="h-4 w-4" />
 						<Alert.Title>No Real Financial Value</Alert.Title>
 						<Alert.Description>
-							All currency on Rugplay (*BUSS, "$", and created coins) is virtual and has no
+							All currency on Booplay (*BUSS, "$", and created coins) is virtual and has no
 							real-world monetary value. No real cryptocurrency or money is involved in any
 							transactions.
 						</Alert.Description>
@@ -90,7 +90,7 @@
 					<div>
 						<h3 class="mb-2 text-lg font-medium">3.1 Age Requirements</h3>
 						<p class="mb-3">
-							You must be at least {MINIMUM_AGE} years old to use Rugplay.
+							You must be at least {MINIMUM_AGE} years old to use Booplay.
 						</p>
 						<p class="text-muted-foreground text-sm">
 							Our platform uses virtual currency with no real-world value. All features are designed
@@ -111,7 +111,7 @@
 
 					<div>
 						<h3 class="mb-2 text-lg font-medium">3.3 Prohibited Users</h3>
-						<p>You may not use Rugplay if you are:</p>
+						<p>You may not use Booplay if you are:</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li>Located in a jurisdiction where use is prohibited</li>
 							<li>Previously banned from the Platform</li>
@@ -130,7 +130,7 @@
 					<HugeiconsIcon icon={TradeDownIcon} class="h-4 w-4" />
 					<Alert.Title>Rug Pull Risk Simulation</Alert.Title>
 					<Alert.Description>
-						Rugplay deliberately simulates rug pull scenarios where coin creators or large holders
+						Booplay deliberately simulates rug pull scenarios where coin creators or large holders
 						can crash prices by selling significant holdings. This is a core educational feature.
 					</Alert.Description>
 				</Alert.Root>
@@ -152,7 +152,7 @@
 
 					<div>
 						<h3 class="mb-2 text-lg font-medium">4.2 Trading Mechanics</h3>
-						<p class="mb-3">Trading on Rugplay includes realistic mechanics such as:</p>
+						<p class="mb-3">Trading on Booplay includes realistic mechanics such as:</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li>
 								<strong>Slippage:</strong> Large trades affect prices based on liquidity pool ratios
@@ -200,7 +200,7 @@
 					<div>
 						<h3 class="mb-2 text-lg font-medium">5.1 Acceptable Use</h3>
 						<p class="mb-3">
-							You agree to use Rugplay only for lawful purposes and in accordance with these Terms.
+							You agree to use Booplay only for lawful purposes and in accordance with these Terms.
 							You will not:
 						</p>
 						<ul class="ml-6 list-disc space-y-2">
@@ -310,7 +310,7 @@
 				<div class="space-y-4">
 					<div>
 						<h3 class="mb-2 text-lg font-medium">7.1 Virtual Arcade Games</h3>
-						<p class="mb-3">Rugplay includes virtual arcade entertainment features:</p>
+						<p class="mb-3">Booplay includes virtual arcade entertainment features:</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li><strong>Coinflip:</strong> Binary outcome game with virtual currency</li>
 							<li>
@@ -476,7 +476,7 @@
 					<HugeiconsIcon icon={Alert02Icon} class="h-4 w-4" />
 					<Alert.Title>Important Legal Disclaimers</Alert.Title>
 					<Alert.Description>
-						Rugplay is provided "as is" without warranties. We are not liable for virtual losses,
+						Booplay is provided "as is" without warranties. We are not liable for virtual losses,
 						rug pulls, or any platform-related damages.
 					</Alert.Description>
 				</Alert.Root>
@@ -512,7 +512,7 @@
 
 					<div>
 						<h3 class="mb-2 text-lg font-medium">10.3 Educational Purpose</h3>
-						<p>Rugplay is designed for educational and entertainment purposes. It is not:</p>
+						<p>Booplay is designed for educational and entertainment purposes. It is not:</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li>Financial advice or investment guidance</li>
 							<li>A substitute for professional financial education</li>
@@ -568,7 +568,7 @@
 				<div class="space-y-4">
 					<div>
 						<h3 class="mb-2 text-lg font-medium">12.1 Platform Ownership</h3>
-						<p>Rugplay and all related intellectual property are owned by us, including:</p>
+						<p>Booplay and all related intellectual property are owned by us, including:</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li>Software, code, algorithms, and technical systems</li>
 							<li>Trademarks, logos, and branding</li>
@@ -581,7 +581,7 @@
 					<div>
 						<h3 class="mb-2 text-lg font-medium">12.2 Past Project Assets and Themes</h3>
 						<p class="mb-3">
-							Rugplay incorporates intellectual property from creator's past projects, including:
+							Booplay incorporates intellectual property from creator's past projects, including:
 						</p>
 						<ul class="ml-6 list-disc space-y-2">
 							<li>Characters, artwork, and visual themes from previous projects</li>
@@ -589,7 +589,7 @@
 							<li>Any derivative works or adaptations of existing intellectual property</li>
 						</ul>
 						<p class="text-muted-foreground mt-3 text-sm">
-							All past project assets used in Rugplay are owned by the platform creators or used
+							All past project assets used in Booplay are owned by the platform creators or used
 							with proper authorization.
 						</p>
 					</div>
@@ -614,7 +614,7 @@
 					in our Privacy Policy, which is incorporated into these Terms by reference.
 				</p>
 				<p>
-					By using Rugplay, you consent to our data practices as described in the Privacy Policy,
+					By using Booplay, you consent to our data practices as described in the Privacy Policy,
 					including the retention of anonymized data after account deletion.
 				</p>
 			</Card.Content>
@@ -626,7 +626,7 @@
 						<h3 class="mb-2 text-lg font-medium">14.1 Entire Agreement</h3>
 						<p>
 							These Terms, along with our Privacy Policy, constitute the entire agreement between
-							you and Rugplay regarding use of the Platform.
+							you and Booplay regarding use of the Platform.
 						</p>
 					</div>
 
@@ -662,7 +662,7 @@
 					<strong>Contact:</strong>
 					<a href="mailto:{CONTACT_EMAIL}" class="text-primary underline">{CONTACT_EMAIL}</a>
 				</p>
-				<p class="mb-2"><strong>Platform:</strong> XprismPlay</p>
+				<p class="mb-2"><strong>Platform:</strong> BooPlay</p>
 			</div>
 		</div>
 

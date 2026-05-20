@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in XprismPlay, please report it responsibly via a **[GitHub private security advisory](https://github.com/xprismplay/rugplay/security/advisories/new)** rather than opening a public issue.
+If you believe you have found a security vulnerability in BooPlay, please report it responsibly via a **[GitHub private security advisory](https://github.com/1boongie/booplay/security/advisories/new)** rather than opening a public issue.
 
 Please include as much of the following as possible:
 
@@ -30,7 +30,7 @@ The following are out of scope:
 
 ## Supported Versions
 
-Only the latest version of XprismPlay is actively maintained. We do not backport security fixes to older versions.
+Only the latest version of BooPlay is actively maintained. We do not backport security fixes to older versions.
 
 ## Our Commitment
 

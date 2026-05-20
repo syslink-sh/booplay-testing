@@ -1,35 +1,35 @@
 <script lang="ts">
+	import {
+		GemIcon,
+		InformationCircleIcon,
+		Loading02Icon,
+		ShoppingBasket01Icon
+	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import confetti from 'canvas-confetti';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
+	import SEO from '$lib/components/self/SEO.svelte';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import * as Tooltip from '$lib/components/ui/tooltip';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import SEO from '$lib/components/self/SEO.svelte';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { GEMS_BALANCE, fetchGemsBalance } from '$lib/stores/gems';
+	import type { CrateTier, CrateTierId, Rarity } from '$lib/data/shop-catalog';
 	import {
-		NAME_COLOR_CATALOG,
 		CRATE_TIERS,
-		RARITY_LABEL,
-		RARITY_CLASS
+		NAME_COLOR_CATALOG,
+		RARITY_CLASS,
+		RARITY_LABEL
 	} from '$lib/data/shop-catalog';
-	import type { CrateTierId, CrateTier, Rarity } from '$lib/data/shop-catalog';
-	import confetti from 'canvas-confetti';
-	import { playSound, showConfetti, showSchoolPrideCannons } from '$lib/utils';
-	import { volumeSettings } from '$lib/stores/volume-settings';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		GemIcon,
-		ShoppingBasket01Icon,
-		Loading02Icon,
-		InformationCircleIcon
-	} from '@hugeicons/core-free-icons';
+	import { fetchGemsBalance, GEMS_BALANCE } from '$lib/stores/gems';
 	import { haptic } from '$lib/stores/haptics';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import { volumeSettings } from '$lib/stores/volume-settings';
+	import { playSound, showConfetti, showSchoolPrideCannons } from '$lib/utils';
 
-	let loadingPackage = $state<string | null>(null);
+	const loadingPackage = $state<string | null>(null);
 	let showSuccessModal = $state(false);
 
 	let confirmTier = $state<CrateTierId | null>(null);
@@ -195,11 +195,18 @@
 			if (reward.type === 'buss') {
 				for (let i = 0; i < 2; i++) {
 					const amt = Math.floor(Math.random() * (reward.max - reward.min) + reward.min);
-					pool.push({ label: `$${amt.toLocaleString()}`, classes: 'text-green-500' });
+					pool.push({
+						label: `$${amt.toLocaleString()}`,
+						classes: 'text-green-500'
+					});
 				}
 			} else if (reward.rarity) {
 				for (const color of NAME_COLOR_CATALOG.filter((c) => c.rarity === reward.rarity)) {
-					pool.push({ label: color.label, classes: color.classes, style: color.style });
+					pool.push({
+						label: color.label,
+						classes: color.classes,
+						style: color.style
+					});
 				}
 			}
 		}
@@ -208,11 +215,17 @@
 
 	function rewardToCycleItem(reward: any): CycleItem {
 		if (reward.type === 'buss') {
-			return { label: `$${reward.bussAmount.toFixed(2)}`, classes: 'text-green-500' };
+			return {
+				label: `$${reward.bussAmount.toFixed(2)}`,
+				classes: 'text-green-500'
+			};
 		}
 		const c = reward.colorKey ? NAME_COLOR_CATALOG.find((x) => x.key === reward.colorKey) : null;
 		if (c) return { label: c.label, classes: c.classes, style: c.style };
-		return { label: `$${(reward.bussAmount ?? 0).toFixed(2)}`, classes: 'text-green-500' };
+		return {
+			label: `$${(reward.bussAmount ?? 0).toFixed(2)}`,
+			classes: 'text-green-500'
+		};
 	}
 
 	function shuffleArray<T>(arr: T[]): T[] {
@@ -409,9 +422,9 @@
 </script>
 
 <SEO
-	title="Shop - XprismPlay"
-	description="Buy Gems to unlock name colors and cosmetics in Rugplay. Open crates for random rewards."
-	keywords="rugplay shop, gems, name colors, cosmetics, crates"
+	title="Shop - BooPlay"
+	description="Buy Gems to unlock name colors and cosmetics in Booplay. Open crates for random rewards."
+	keywords="booplay shop, gems, name colors, cosmetics, crates"
 />
 
 <!-- Success modal -->
@@ -687,7 +700,7 @@
 											</div>
 										{/each}
 										<div class="text-muted-foreground border-t pt-1">
-											Duplicate colors award Rugplay money instead.
+											Duplicate colors award Booplay money instead.
 										</div>
 									</div>
 								</Tooltip.Content>

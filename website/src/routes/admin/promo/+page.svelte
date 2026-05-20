@@ -1,9 +1,19 @@
 <script lang="ts">
+	import {
+		Add01Icon,
+		Calendar01Icon,
+		Cancel01Icon,
+		CancelCircleIcon,
+		Loading03Icon,
+		People,
+		Tick01Icon,
+		Ticket01Icon,
+		UserGroupIcon
+	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Switch } from '$lib/components/ui/switch';
-	import * as Select from '$lib/components/ui/select';
 	import {
 		Card,
 		CardContent,
@@ -11,25 +21,15 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import { Badge } from '$lib/components/ui/badge';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import * as Select from '$lib/components/ui/select';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		Add01Icon,
-		Ticket01Icon,
-		UserGroupIcon,
-		Calendar01Icon,
-		CancelCircleIcon,
-		Loading03Icon,
-		Tick01Icon,
-		Cancel01Icon,
-		People
-	} from '@hugeicons/core-free-icons';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { formatDate, getExpirationDate } from '$lib/utils';
-	import type { PromoCode, PromoCodeUse } from '$lib/types/promo-code';
+	import { Switch } from '$lib/components/ui/switch';
 	import { hasFlag } from '$lib/data/flags';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import type { PromoCode, PromoCodeUse } from '$lib/types/promo-code';
+	import { formatDate, getExpirationDate } from '$lib/utils';
 
 	let code = $state('');
 	let rewardAmount = $state('');
@@ -51,7 +51,7 @@
 		{ value: '30d', label: '30 Days' }
 	];
 
-	let currentExpirationLabel = $derived(
+	const currentExpirationLabel = $derived(
 		expirationOptions.find((option) => option.value === expirationOption)?.label ||
 			'Select expiration'
 	);
@@ -61,7 +61,7 @@
 		{ value: 'GEMS', label: 'Gems 💎' }
 	];
 
-	let currentRewardTypeLabel = $derived(
+	const currentRewardTypeLabel = $derived(
 		rewardTypeOptions.find((option) => option.value === rewardType)?.label || 'Base Currency ($)'
 	);
 
@@ -99,7 +99,7 @@
 		}
 	}
 
-	let isFormValid = $derived(code.trim() && rewardAmount);
+	const isFormValid = $derived(code.trim() && rewardAmount);
 
 	async function createPromoCode() {
 		if (!code.trim() || !rewardAmount) return;
@@ -187,7 +187,7 @@
 </script>
 
 <svelte:head>
-	<title>Promo Codes - Admin | XprismPlay</title>
+	<title>Promo Codes - Admin | BooPlay</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

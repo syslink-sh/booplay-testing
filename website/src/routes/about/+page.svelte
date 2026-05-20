@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
 		BookOpen01Icon,
-		GithubIcon,
-		UserIcon,
 		Coins01Icon,
+		DiscordIcon,
+		GithubIcon,
 		TradeUpIcon,
-		DiscordIcon
+		UserIcon
 	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import UserManualModal from '$lib/components/self/UserManualModal.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 
 	let showUserManual = $state(false);
 	function handleManual() {
@@ -21,18 +21,18 @@
 <UserManualModal bind:open={showUserManual} />
 
 <svelte:head>
-	<title>About - XprismPlay</title>
+	<title>About - BooPlay</title>
 	<meta
 		name="description"
-		content="Learn about Rugplay - a realistic cryptocurrency trading simulation focusing on DeFi risks and mechanics."
+		content="Learn about Booplay - a realistic cryptocurrency trading simulation focusing on DeFi risks and mechanics."
 	/>
 </svelte:head>
 
 <div class="container mx-auto space-y-8 px-4 py-8">
 	<div class="space-y-4 text-center">
 		<div class="mb-4 flex items-center justify-center gap-2">
-			<img src="/rugplay.svg" class="h-12 w-12" alt="Rugplay" />
-			<h1 class="text-4xl font-bold">XprismPlay</h1>
+			<img src="/rugplay.svg" class="h-12 w-12" alt="Booplay" />
+			<h1 class="text-4xl font-bold">BooPlay</h1>
 		</div>
 		<p class="text-muted-foreground mx-auto max-w-2xl text-lg">
 			A crypto trading simulator where you can practice trading without losing real money. Create
@@ -51,13 +51,13 @@
 			<CardHeader>
 				<CardTitle class="flex items-center gap-2">
 					<HugeiconsIcon icon={Coins01Icon} class="text-primary h-5 w-5" />
-					About Rugplay
+					About BooPlay
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div class="space-y-3">
 					<p class="text-muted-foreground text-sm">
-						Rugplay is a realistic cryptocurrency trading simulation that focuses on DeFi
+						BooPlay is a realistic cryptocurrency trading simulation that focuses on DeFi
 						(Decentralized Finance) mechanics and the inherent risks of decentralized trading.
 					</p>
 					<p class="text-muted-foreground text-sm">
@@ -122,27 +122,49 @@
 			</CardHeader>
 			<CardContent>
 				<div class="space-y-4">
-					<p class="text-muted-foreground text-sm">Created by <strong>FaceDev</strong></p>
+					<p class="text-muted-foreground text-sm">Rugplay Created by <strong>FaceDev</strong></p>
+					<p class="text-muted-foreground text-sm">XprismPlay Maintened by <strong>Xprism</strong></p>
+					<p class="text-muted-foreground text-sm">BooPlay Maintened by <strong>Boongie</strong></p>
 					<div class="flex flex-wrap gap-2">
 						<Button
 							variant="outline"
 							size="sm"
-							href="https://github.com/xprismplay/XprismPlay"
+							href="https://github.com/outpoot/booplay"
 							target="_blank"
 							rel="noopener"
 						>
 							<HugeiconsIcon icon={GithubIcon} class="h-4 w-4" />
-							GitHub
+							Rugplay's GitHub
 						</Button>
 						<Button
 							variant="outline"
 							size="sm"
-							href="https://discord.gg/HKZ7EQEgaZ"
+							href="https://github.com/xprismplay/BooPlay"
+							target="_blank"
+							rel="noopener"
+						>
+							<HugeiconsIcon icon={GithubIcon} class="h-4 w-4" />
+							XPrismPlay's GitHub
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							href="https://github.com/xprismplay/BooPlay"
+							target="_blank"
+							rel="noopener"
+						>
+							<HugeiconsIcon icon={GithubIcon} class="h-4 w-4" />
+							Our GitHub
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							href="https://discord.gg/JGT4JJv5M7"
 							target="_blank"
 							rel="noopener"
 						>
 							<HugeiconsIcon icon={DiscordIcon} class="h-4 w-4" />
-							Discord
+							Our Discord
 						</Button>
 					</div>
 					<p class="text-muted-foreground text-sm">

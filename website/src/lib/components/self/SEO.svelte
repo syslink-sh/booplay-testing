@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	let {
-		title = 'XprismPlay',
+	const {
+		title = 'BooPlay',
 		description = 'Experience realistic cryptocurrency trading simulation game with AI-powered markets, rug pull mechanics, and virtual currencies. Learn crypto trading without financial risk in this educational game.',
 		type = 'website',
 		image = '/apple-touch-icon.png',
-		imageAlt = 'Rugplay Logo',
+		imageAlt = 'Booplay Logo',
 		keywords = '',
 		author = 'Outpoot',
 		canonicalUrl = '',
@@ -25,16 +25,16 @@
 		twitterCard?: 'summary' | 'summary_large_image';
 	} = $props();
 
-	let currentUrl = $derived($page?.url?.href || '');
-	let canonical = $derived(canonicalUrl || currentUrl);
+	const currentUrl = $derived($page?.url?.href || '');
+	const canonical = $derived(canonicalUrl || currentUrl);
 
-	let fullImageUrl = $derived(
-		image?.startsWith('http') ? image : `${$page?.url?.origin || 'https://rugplay.com'}${image}`
+	const fullImageUrl = $derived(
+		image?.startsWith('http') ? image : `${$page?.url?.origin || 'https://booplay.fun'}${image}`
 	);
 
-	let defaultKeywords =
+	const defaultKeywords =
 		'cryptocurrency simulation, trading game, crypto simulator, virtual trading, rug pull simulation, defi game, blockchain simulation, bitcoin simulator, ethereum game, trading simulator, educational game, crypto learning';
-	let allKeywords = $derived(keywords ? `${defaultKeywords}, ${keywords}` : defaultKeywords);
+	const allKeywords = $derived(keywords ? `${defaultKeywords}, ${keywords}` : defaultKeywords);
 </script>
 
 <svelte:head>
@@ -62,7 +62,7 @@
 	<meta property="og:url" content={currentUrl} />
 	<meta property="og:image" content={fullImageUrl} />
 	<meta property="og:image:alt" content={imageAlt} />
-	<meta property="og:site_name" content="Rugplay" />
+	<meta property="og:site_name" content="Booplay" />
 	<meta property="og:locale" content="en_US" />
 
 	<!-- Twitter Card Meta Tags -->
@@ -76,8 +76,8 @@
 
 	<!-- Additional Meta Tags -->
 	<meta name="theme-color" content="#fb2c36" />
-	<meta name="application-name" content="Rugplay" />
-	<meta name="apple-mobile-web-app-title" content="Rugplay" />
+	<meta name="application-name" content="Booplay" />
+	<meta name="apple-mobile-web-app-title" content="Booplay" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 </svelte:head>

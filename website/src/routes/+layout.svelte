@@ -1,22 +1,20 @@
 <script lang="ts">
 	import '../app.css';
 
+	import { ModeWatcher } from 'mode-watcher';
+	import { onMount, untrack } from 'svelte';
+	import { _ } from 'svelte-i18n';
+	import { RenderScan } from 'svelte-render-scan';
+	import { dev } from '$app/environment';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
+	import AppSidebar from '$lib/components/self/AppSidebar.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
-
-	import AppSidebar from '$lib/components/self/AppSidebar.svelte';
-
 	import { USER_DATA } from '$lib/stores/user-data';
-	import { onMount, untrack } from 'svelte';
-	import { invalidateAll } from '$app/navigation';
-	import { ModeWatcher } from 'mode-watcher';
-	import { page } from '$app/state';
 	import { websocketController } from '$lib/stores/websocket';
-	import { dev } from '$app/environment';
-	import { RenderScan } from 'svelte-render-scan';
-	import { _ } from 'svelte-i18n';
 
-	let { data, children } = $props<{
+	const { data, children } = $props<{
 		data: { userSession?: any };
 		children: any;
 	}>();
@@ -58,7 +56,7 @@
 			'color: #4962ee; font-family: monospace; font-size: 12px; font-weight: bold; text-shadow: 2px 2px rgba(0,0,0,0.2);'
 		);
 		console.log(
-			'%c Welcome to XprismPlay! DO NOT FUCKING PASTE ANYTHING IN THE CONSOLE UNLESS YOU KNOW WHAT YOU ARE DOING.',
+			'%c Welcome to BooPlay! DO NOT FUCKING PASTE ANYTHING IN THE CONSOLE UNLESS YOU KNOW WHAT YOU ARE DOING.',
 			'color: #4962ee; font-family: monospace; font-size: 12px; font-weight: bold; text-shadow: 2px 2px rgba(0,0,0,0.2);'
 		);
 		console.log(
@@ -79,7 +77,7 @@
 	});
 
 	function getPageTitle(routeId: string | null): string {
-		if (!routeId) return 'Rugplay';
+		if (!routeId) return 'Booplay';
 
 		const titleMap: Record<string, string> = {
 			'/': $_('page_names.home'),
@@ -115,7 +113,7 @@
 			return 'Prediction Question';
 		}
 
-		return titleMap[routeId] || 'Rugplay';
+		return titleMap[routeId] || 'Booplay';
 	}
 </script>
 

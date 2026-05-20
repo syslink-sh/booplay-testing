@@ -31,9 +31,9 @@
 	const tips: Tip[] = [
 		{
 			id: 1,
-			title: 'Welcome to Rugplay!',
+			title: 'Welcome to Booplay!',
 			description:
-				'Rugplay is a cryptocurrency trading simulator where you can practice trading without real financial risk. Start with virtual money, create coins, make predictions on markets, and most importantly, rugpull!',
+				'Booplay is a cryptocurrency trading simulator where you can practice trading without real financial risk. Start with virtual money, create coins, make predictions on markets, and most importantly, rugpull!',
 			icon: BookOpen01Icon,
 			image: '/tips/cover.avif'
 		},
@@ -57,7 +57,7 @@
 			id: 4,
 			title: 'AMM - Automated Market Maker',
 			description:
-				'Rugplay uses an AMM system where prices are calculated automatically based on supply and demand. The more you buy, the higher the price goes. The more you sell, the lower it drops. Large trades create "slippage" - the price change during your trade.',
+				'Booplay uses an AMM system where prices are calculated automatically based on supply and demand. The more you buy, the higher the price goes. The more you sell, the lower it drops. Large trades create "slippage" - the price change during your trade.',
 			icon: BarChartIcon,
 			image: '/tips/amm.avif'
 		},

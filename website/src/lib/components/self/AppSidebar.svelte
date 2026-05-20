@@ -1,67 +1,67 @@
 <script lang="ts">
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import {
+		Activity01Icon,
+		Analytics01Icon,
+		ArrowDown01Icon,
+		ArrowUpDownIcon,
+		Award05Icon,
+		BookOpen01Icon,
+		Briefcase01Icon,
+		ChampionIcon,
+		Coins02Icon,
+		CrownIcon,
+		GemIcon,
+		GiftIcon,
+		Home03Icon,
+		InformationCircleIcon,
+		Joystick04Icon,
+		JusticeScale01Icon,
+		Key01Icon,
+		LegalHammerIcon,
+		Logout01Icon,
+		Money01Icon,
+		Moon01Icon,
+		Notification01Icon,
+		PiggyBankIcon,
+		Settings01Icon,
+		Shield01Icon,
+		ShieldUserIcon,
+		ShoppingBasket01Icon,
+		Store01Icon,
+		Sun01Icon,
+		Ticket01Icon,
+		TradeDownIcon,
+		TradeUpIcon,
+		UserGroupIcon,
+		UserIcon,
+		Wallet01Icon
+	} from '@hugeicons/core-free-icons';
+	import { HugeiconsIcon } from '@hugeicons/svelte';
+	import { mode, setMode } from 'mode-watcher';
+	import { onMount } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import { _ } from 'svelte-i18n';
+	import { goto } from '$app/navigation';
+	import { signOut } from '$lib/auth-client';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Badge } from '$lib/components/ui/badge';
-	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { HugeiconsIcon } from '@hugeicons/svelte';
-	import {
-		Moon01Icon,
-		Sun01Icon,
-		Home03Icon,
-		Store01Icon,
-		Briefcase01Icon,
-		Coins02Icon,
-		ArrowUpDownIcon,
-		Logout01Icon,
-		Wallet01Icon,
-		ChampionIcon,
-		Activity01Icon,
-		TradeUpIcon,
-		TradeDownIcon,
-		UserIcon,
-		Settings01Icon,
-		GiftIcon,
-		Shield01Icon,
-		Ticket01Icon,
-		PiggyBankIcon,
-		Analytics01Icon,
-		JusticeScale01Icon,
-		ShieldUserIcon,
-		LegalHammerIcon,
-		BookOpen01Icon,
-		InformationCircleIcon,
-		Notification01Icon,
-		CrownIcon,
-		Key01Icon,
-		Joystick04Icon,
-		ShoppingBasket01Icon,
-		GemIcon,
-		Award05Icon,
-		ArrowDown01Icon,
-		UserGroupIcon,
-		Money01Icon
-	} from '@hugeicons/core-free-icons';
-	import { mode, setMode } from 'mode-watcher';
-	import type { HTMLAttributes } from 'svelte/elements';
-	import { USER_DATA } from '$lib/stores/user-data';
-	import { PORTFOLIO_SUMMARY, fetchPortfolioSummary } from '$lib/stores/portfolio-data';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Sidebar from '$lib/components/ui/sidebar';
 	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
-	import SignInConfirmDialog from './SignInConfirmDialog.svelte';
-	import DailyRewards from './DailyRewards.svelte';
-	import PromoCodeDialog from './PromoCodeDialog.svelte';
-	import UserManualModal from './UserManualModal.svelte';
-	import { signOut } from '$lib/auth-client';
-	import { formatValue, getPublicUrl } from '$lib/utils';
-	import { goto } from '$app/navigation';
-	import { liveTradesStore, isLoadingTrades } from '$lib/stores/websocket';
-	import { onMount } from 'svelte';
-	import { UNREAD_COUNT, fetchNotifications } from '$lib/stores/notifications';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+	import { hasFlag, UserFlags } from '$lib/data/flags';
 	import { NEW_ACHIEVEMENTS_COUNT } from '$lib/stores/achievements';
 	import { ARCADE_STATS, fetchArcadeStats } from '$lib/stores/arcade-stats';
-	import { GEMS_BALANCE, fetchGemsBalance } from '$lib/stores/gems';
-	import { _ } from 'svelte-i18n';
-	import { hasFlag, UserFlags } from '$lib/data/flags';
+	import { fetchGemsBalance, GEMS_BALANCE } from '$lib/stores/gems';
+	import { fetchNotifications, UNREAD_COUNT } from '$lib/stores/notifications';
+	import { fetchPortfolioSummary, PORTFOLIO_SUMMARY } from '$lib/stores/portfolio-data';
+	import { USER_DATA } from '$lib/stores/user-data';
+	import { isLoadingTrades, liveTradesStore } from '$lib/stores/websocket';
+	import { formatValue, getPublicUrl } from '$lib/utils';
+	import DailyRewards from './DailyRewards.svelte';
+	import PromoCodeDialog from './PromoCodeDialog.svelte';
+	import SignInConfirmDialog from './SignInConfirmDialog.svelte';
+	import UserManualModal from './UserManualModal.svelte';
 
 	const data = {
 		navMain: [
@@ -70,15 +70,39 @@
 			{ title: $_('page_names.hopium'), url: '/hopium', icon: ArrowUpDownIcon },
 			{ title: $_('page_names.arcade'), url: '/arcade', icon: Joystick04Icon },
 			{ title: $_('page_names.lottery'), url: '/lottery', icon: Money01Icon },
-			{ title: $_('page_names.leaderboard'), url: '/leaderboard', icon: ChampionIcon },
+			{
+				title: $_('page_names.leaderboard'),
+				url: '/leaderboard',
+				icon: ChampionIcon
+			},
 			{ title: $_('page_names.shop'), url: '/shop', icon: ShoppingBasket01Icon },
-			{ title: $_('page_names.achievements'), url: '/achievements', icon: Award05Icon },
+			{
+				title: $_('page_names.achievements'),
+				url: '/achievements',
+				icon: Award05Icon
+			},
 			{ title: $_('page_names.groups'), url: '/groups', icon: UserGroupIcon },
-			{ title: $_('page_names.portfolio'), url: '/portfolio', icon: Briefcase01Icon },
+			{
+				title: $_('page_names.portfolio'),
+				url: '/portfolio',
+				icon: Briefcase01Icon
+			},
 			{ title: $_('page_names.treemap'), url: '/treemap', icon: Analytics01Icon },
-			{ title: $_('page_names.create_coin'), url: '/coin/create', icon: Coins02Icon },
-			{ title: $_('page_names.notifications'), url: '/notifications', icon: Notification01Icon },
-			{ title: $_('page_names.about'), url: '/about', icon: InformationCircleIcon }
+			{
+				title: $_('page_names.create_coin'),
+				url: '/coin/create',
+				icon: Coins02Icon
+			},
+			{
+				title: $_('page_names.notifications'),
+				url: '/notifications',
+				icon: Notification01Icon
+			},
+			{
+				title: $_('page_names.about'),
+				url: '/about',
+				icon: InformationCircleIcon
+			}
 		]
 	};
 	type MenuButtonProps = HTMLAttributes<HTMLAnchorElement | HTMLButtonElement>;
@@ -193,7 +217,7 @@
 		<div class="flex items-center gap-2 px-2 py-2">
 			<img src="/rugplay.svg" class="h-5 w-5" alt="twoblade" />
 			<div class="flex items-center gap-2">
-				<span class="text-base font-semibold">XprismPlay</span>
+				<span class="text-base font-semibold">BooPlay</span>
 				{#if hasFlag($USER_DATA?.flags, 'IS_ADMIN')}
 					<span class="text-muted-foreground text-xs">| Admin</span>
 				{/if}
