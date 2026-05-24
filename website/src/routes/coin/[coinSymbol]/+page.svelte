@@ -11,6 +11,7 @@
 	import UserName from '$lib/components/self/UserName.svelte';
 	import CoinSkeleton from '$lib/components/self/skeletons/CoinSkeleton.svelte';
 	import TopHolders from '$lib/components/self/TopHolders.svelte';
+	import TopStakers from '$lib/components/self/TopStakers.svelte';
 	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
 		TradeUpIcon,
@@ -178,7 +179,7 @@
 		const epochMarker = lastEpochTime;
 
 		const clockInterval = setInterval(() => {
-			const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
+			const FOUR_HOURS_MS = 1 * 60 * 60 * 1000;
 			const targetNextEpoch = epochMarker + FOUR_HOURS_MS;
 			const remainingMs = targetNextEpoch - Date.now();
 
@@ -889,6 +890,7 @@
 					</Card.Root>
 					<!-- Top Holders -->
 					<TopHolders coinSymbol={coin.symbol} />
+					<TopStakers coinSymbol={coin.symbol} />
 					<Card.Root>
 						<Card.Header>
 							<Card.Title class="flex items-center gap-2">

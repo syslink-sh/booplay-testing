@@ -14,7 +14,7 @@ export async function advancePoolEpochs(tx: any, coinId: number) {
 	if (!poolData || !coinData) return null;
 
 	const now = new Date();
-	const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
+	const FOUR_HOURS_MS = 1 * 60 * 60 * 1000;
 	const msPassed = now.getTime() - new Date(poolData.lastEpochAt).getTime();
 	const epochsPassed = Math.floor(msPassed / FOUR_HOURS_MS);
 
