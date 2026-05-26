@@ -75,7 +75,7 @@
 			{ title: $_('page_names.shop'), url: '/shop', icon: ShoppingBasket01Icon },
 			{ title: $_('page_names.achievements') || 'Achievements', url: '/achievements', icon: Award05Icon },
 			{ title: $_('page_names.groups') || 'Groups', url: '/groups', icon: UserGroupIcon },
-			{ title: $_('page_names.chat') || 'Chat', url: '/chat', icon: Message01Icon },
+			{ title: $_('page_names.chat') || 'Chat', url: '/chat?channel=1', icon: Message01Icon },
 			{ title: $_('page_names.portfolio') || 'Portfolio', url: '/portfolio', icon: Briefcase01Icon },
 			{ title: $_('page_names.treemap') || 'Treemap', url: '/treemap', icon: Analytics01Icon },
 			{ title: $_('page_names.create_coin') || 'Create Coin', url: '/coin/create', icon: Coins02Icon },
