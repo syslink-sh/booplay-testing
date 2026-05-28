@@ -738,7 +738,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
 	},
 	{
 		id: 'own_40_colors',
-		name: 'Addicted Collector Pro',
+		name: 'Addicted Collector Pro Max',
 		description: 'Own 40 different name colors',
 		icon: 'lock.png',
 		difficulty: 'hard',
@@ -761,7 +761,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
 	},
 	{
 		id: 'open_100_crates',
-		name: 'Crate Addict',
+		name: 'Mega Crate Addict',
 		description: 'Open 100 crates',
 		icon: 'box.png',
 		difficulty: 'hard',
@@ -772,7 +772,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
 	},
 	{
 		id: 'open_150_crates',
-		name: 'Crate Addict',
+		name: 'Ultra Crate Addict',
 		description: 'Open 150 crates',
 		icon: 'box.png',
 		difficulty: 'hard',
@@ -783,7 +783,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
 	},
 	{
 		id: 'open_200_crates',
-		name: 'Crate Addict',
+		name: 'Crate Addict Pro',
 		description: 'Open 200 crates',
 		icon: 'box.png',
 		difficulty: 'hard',
