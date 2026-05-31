@@ -15,7 +15,7 @@ export async function POST({ request }) {
 		.where(eq(user.id, Number(session.user.id)))
 		.limit(1);
 
-	if (!hasFlag(me?.flags, 'IS_HEAD_ADMIN', 'IS_ADMIN')) throw error(403, 'Admin access required');
+	if (!hasFlag(me?.flags, 'IS_HEAD_ADMIN')) throw error(403, 'Head Admin access required');
 
 	const { username, grantDeveloper } = await request.json();
 	if (!username?.trim() || grantDeveloper === undefined) throw error(400, 'Missing fields');
