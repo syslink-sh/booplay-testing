@@ -3,6 +3,7 @@
 	import { _ } from 'svelte-i18n';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
+	import AdRectangle from '$lib/components/self/AdRectangle.svelte';
 	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
 	import DataTable from '$lib/components/self/DataTable.svelte';
 	import SEO from '$lib/components/self/SEO.svelte';
@@ -142,6 +143,8 @@
 				</a>
 			{/each}
 		</div>
+
+		<AdRectangle hideAds={$USER_DATA?.hideAds ?? false} class="my-10" />
 
 		<div class="mt-12">
 			<h2 class="mb-4 text-2xl font-bold">{$_('main.market_overview')}</h2>

@@ -845,3 +845,26 @@ export const weeklyLotteryTicket = pgTable(
 		wkTicketUserIdx: index('weekly_lottery_ticket_user_id_idx').on(table.userId)
 	})
 );
+
+export const advertisement = pgTable(
+	'advertisement',
+	{
+		id: serial('id').primaryKey(),
+		userId: integer('user_id')
+			.notNull()
+			.references(() => user.id, { onDelete: 'cascade' }),
+		coinId: integer('coin_id')
+			.notNull()
+			.references(() => coin.id, { onDelete: 'cascade' }),
+		durationHours: integer('duration_hours').notNull(),
+		totalCost: decimal('total_cost', { precision: 30, scale: 8 }).notNull(),
+		startsAt: timestamp('starts_at', { withTimezone: true }).notNull().defaultNow(),
+		expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
+	},
+	(table) => ({
+		userIdIdx: index('advertisement_user_id_idx').on(table.userId),
+		coinIdIdx: index('advertisement_coin_id_idx').on(table.coinId),
+		expiresAtIdx: index('advertisement_expires_at_idx').on(table.expiresAt)
+	})
+);
