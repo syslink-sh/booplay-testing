@@ -22,6 +22,7 @@
 	import LeaderboardSearchSkeleton from '$lib/components/self/skeletons/LeaderboardSearchSkeleton.svelte';
 	import LeaderboardSkeleton from '$lib/components/self/skeletons/LeaderboardSkeleton.svelte';
 	import UserName from '$lib/components/self/UserName.svelte';
+	import AdRectangle from '$lib/components/self/AdRectangle.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
@@ -529,4 +530,6 @@
 			{/if}
 		</div>
 	{/if}
+
+	<AdRectangle class="mt-10" />
 </div>

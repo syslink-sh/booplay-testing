@@ -7,7 +7,8 @@ export const UserFlags = {
 	NO_TRANSFER: 1n << 5n,
 	NO_HOPIUM: 1n << 6n,
 	NO_GROUP_TRANSFER: 1n << 7n,
-	NO_PROMOCODES: 1n << 8n
+	NO_PROMOCODES: 1n << 8n,
+	DEVELOPER: 1n << 9n
 } as const;
 export function hasFlag(
 	_flags: bigint | number | string | undefined,

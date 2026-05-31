@@ -7,6 +7,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Label } from '$lib/components/ui/label';
+	import AdRectangle from '$lib/components/self/AdRectangle.svelte';
 	import CoinIcon from '$lib/components/self/CoinIcon.svelte';
 	import MarketSkeleton from '$lib/components/self/skeletons/MarketSkeleton.svelte';
 	import SEO from '$lib/components/self/SEO.svelte';
@@ -570,4 +571,6 @@
 			</div>
 		{/if}
 	{/if}
+
+	<AdRectangle class="mt-10" />
 </div>

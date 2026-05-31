@@ -2,6 +2,7 @@
 	import type { UserProfile } from '$lib/types/user-profile';
 	import SilentBadge from './SilentBadge.svelte';
 	import {
+		BinaryCodeIcon,
 		HashtagIcon,
 		KnightShieldIcon,
 		Fire02Icon,
@@ -48,6 +49,9 @@
 	{/if}
 	{#if hasFlag(user.flags, 'FOUNDER_BADGE')}
 		<SilentBadge icon={Rocket01Icon} text="Supporter" class="text-cyan-400 {badgeClass}" />
+	{/if}
+	{#if hasFlag(user.flags, 'DEVELOPER')}
+		<SilentBadge icon={BinaryCodeIcon} text="Developer" class="text-violet-400 {badgeClass}" />
 	{/if}
 	{#if hasFlag(user.flags, 'IS_HEAD_ADMIN')}
 		<SilentBadge icon={KnightShieldIcon} text="Head Admin" class="text-orange-500 {badgeClass}" />

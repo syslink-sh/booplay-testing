@@ -4,6 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { HugeiconsIcon } from '@hugeicons/svelte';
 	import {
+		BinaryCodeIcon,
 		Shield01Icon,
 		UserCheck01Icon,
 		Cancel01Icon,
@@ -33,6 +34,34 @@
 	let removePortfolioUsername = $state('');
 	let removePortfolioSymbol = $state('');
 	let removePortfolioLoading = $state(false);
+
+	// Developer Badge State
+	let developerUsername = $state('');
+	let developerLoading = $state(false);
+
+	async function toggleDeveloper(grantDeveloper: boolean) {
+		if (!developerUsername.trim()) return;
+		developerLoading = true;
+		try {
+			const response = await fetch('/api/admin/head/toggle-developer', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ username: developerUsername.trim(), grantDeveloper })
+			});
+			if (response.ok) {
+				const data = await response.json();
+				toast.success(data.message);
+				developerUsername = '';
+			} else {
+				const err = await response.json();
+				toast.error(err.message || 'Failed to update user');
+			}
+		} catch {
+			toast.error('Failed to communicate with the server');
+		} finally {
+			developerLoading = false;
+		}
+	}
 
 	async function toggleAdmin(makeAdmin: boolean) {
 		if (!usernameToAction.trim()) return;
@@ -402,6 +431,49 @@
 						class="w-full"
 					>
 						Remove Portfolio
+					</Button>
+				</div>
+			</div>
+		</Card.Content>
+	</Card.Root>
+
+	<Card.Root>
+		<Card.Header>
+			<Card.Title class="flex items-center gap-2">
+				<HugeiconsIcon icon={BinaryCodeIcon} class="h-5 w-5 text-violet-400" />
+				Developer Badge
+			</Card.Title>
+			<Card.Description>
+				Grant or revoke the Developer badge for users who have contributed to the website.
+			</Card.Description>
+		</Card.Header>
+		<Card.Content>
+			<div class="max-w-md space-y-4">
+				<div>
+					<label for="dev-username" class="mb-2 block text-sm font-medium">Target Username</label>
+					<Input
+						id="dev-username"
+						bind:value={developerUsername}
+						placeholder="Enter username (without @)"
+					/>
+				</div>
+				<div class="flex gap-4 pt-2">
+					<Button
+						onclick={() => toggleDeveloper(true)}
+						disabled={!developerUsername.trim() || developerLoading}
+						class="flex-1 bg-violet-500 text-white hover:bg-violet-600"
+					>
+						<HugeiconsIcon icon={BinaryCodeIcon} class="mr-2 h-4 w-4" />
+						Grant Developer
+					</Button>
+					<Button
+						variant="destructive"
+						onclick={() => toggleDeveloper(false)}
+						disabled={!developerUsername.trim() || developerLoading}
+						class="flex-1"
+					>
+						<HugeiconsIcon icon={Cancel01Icon} class="mr-2 h-4 w-4" />
+						Revoke Developer
 					</Button>
 				</div>
 			</div>

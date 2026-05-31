@@ -7,3 +7,14 @@ export const FIXED_SUPPLY = 1000000000; // 1 billion tokens
 export const STARTING_PRICE = 0.000001; // $0.000001 per token
 export const INITIAL_LIQUIDITY = FIXED_SUPPLY * STARTING_PRICE; // $1000
 export const TOTAL_COST = CREATION_FEE + INITIAL_LIQUIDITY; // $1100
+
+// ADVERTISEMENT PRICING
+// Cost is in gems
+export const AD_DURATIONS = [
+	{ hours: 1, cost: 500 },
+	{ hours: 6, cost: 2500 },
+	{ hours: 12, cost: 4000 },
+	{ hours: 24, cost: 6000 },
+	{ hours: 48, cost: 10000 },
+	{ hours: 72, cost: 14000 }
+] as const;

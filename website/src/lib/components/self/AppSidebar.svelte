@@ -3,6 +3,7 @@
 		Activity01Icon,
 		Analytics01Icon,
 		ArrowDown01Icon,
+		MegaphoneIcon,
 		ArrowUpDownIcon,
 		Award05Icon,
 		BookOpen01Icon,
@@ -58,6 +59,7 @@
 	import { USER_DATA } from '$lib/stores/user-data';
 	import { isLoadingTrades, liveTradesStore } from '$lib/stores/websocket';
 	import { formatValue, getPublicUrl } from '$lib/utils';
+	import AdSquare from './AdSquare.svelte';
 	import DailyRewards from './DailyRewards.svelte';
 	import PromoCodeDialog from './PromoCodeDialog.svelte';
 	import SignInConfirmDialog from './SignInConfirmDialog.svelte';
@@ -111,8 +113,19 @@
 	let shouldSignIn = $state(false);
 	let showPromoCode = $state(false);
 	let showUserManual = $state(false);
+	let sidebarAds = $state<any[]>([]);
+
+	async function fetchSidebarAds() {
+		try {
+			const res = await fetch('/api/ads/active');
+			if (res.ok) sidebarAds = await res.json();
+		} catch {}
+	}
 
 	onMount(() => {
+		fetchSidebarAds();
+		const adInterval = setInterval(fetchSidebarAds, 60_000);
+
 		if ($USER_DATA) {
 			fetchPortfolioSummary();
 			fetchNotifications();
@@ -126,6 +139,8 @@
 			PORTFOLIO_SUMMARY.set(null);
 			ARCADE_STATS.set(null);
 		}
+
+		return () => clearInterval(adInterval);
 	});
 
 	function handleNavClick(title: string) {
@@ -426,6 +441,18 @@
 				</Sidebar.GroupContent>
 			</Sidebar.Group>
 		{/if}
+		{#if !$USER_DATA?.hideAds && sidebarAds.length > 0}
+			<Sidebar.Group>
+				<Sidebar.GroupLabel class="text-[9px] tracking-widest uppercase text-yellow-500/70">Sponsored</Sidebar.GroupLabel>
+				<Sidebar.GroupContent>
+					<div class="flex flex-col gap-1.5 px-1 pb-1">
+						{#each sidebarAds as ad (ad.id)}
+							<AdSquare {ad} />
+						{/each}
+					</div>
+				</Sidebar.GroupContent>
+			</Sidebar.Group>
+		{/if}
 	</Sidebar.Content>
 
 	{#if $USER_DATA}
@@ -483,6 +510,10 @@
 								<DropdownMenu.Item onclick={handlePrestigeClick}>
 									<HugeiconsIcon icon={CrownIcon} />
 									Prestige
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={() => { goto('/advertisements'); setOpenMobile(false); }}>
+									<HugeiconsIcon icon={MegaphoneIcon} />
+									Advertisements
 								</DropdownMenu.Item>
 							</DropdownMenu.Group>
 							<DropdownMenu.Separator />

@@ -2,6 +2,7 @@
 	import {
 		Analytics01Icon,
 		Coins01Icon,
+		MegaphoneIcon,
 		MoneyBag02Icon,
 		TradeDownIcon,
 		TradeUpIcon
@@ -24,6 +25,7 @@
 	import SignInConfirmDialog from '$lib/components/self/SignInConfirmDialog.svelte';
 	import CoinSkeleton from '$lib/components/self/skeletons/CoinSkeleton.svelte';
 	import TopHolders from '$lib/components/self/TopHolders.svelte';
+	import CreateAdModal from '$lib/components/self/CreateAdModal.svelte';
 	import TradeModal from '$lib/components/self/TradeModal.svelte';
 	import UserName from '$lib/components/self/UserName.svelte';
 	import UserProfilePreview from '$lib/components/self/UserProfilePreview.svelte';
@@ -33,6 +35,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as HoverCard from '$lib/components/ui/hover-card';
 	import * as Select from '$lib/components/ui/select';
+	import { GEMS_BALANCE, fetchGemsBalance } from '$lib/stores/gems';
 	import { fetchPortfolioSummary } from '$lib/stores/portfolio-data';
 	import { USER_DATA } from '$lib/stores/user-data';
 	import { isConnectedStore, type PriceUpdate, websocketController } from '$lib/stores/websocket';
@@ -51,6 +54,7 @@
 	let buyModalOpen = $state(false);
 	let sellModalOpen = $state(false);
 	let burnModalOpen = $state(false);
+	let adModalOpen = $state(false);
 	let selectedTimeframe = $state(data.timeframe || '1m');
 	let lastPriceUpdateTime = 0;
 	let shouldSignIn = $state(false);
@@ -79,6 +83,7 @@
 
 	onMount(async () => {
 		await loadUserHolding();
+		if ($USER_DATA) fetchGemsBalance();
 
 		websocketController.setCoin(coinSymbol.toUpperCase());
 		websocketController.subscribeToPriceUpdates(coinSymbol.toUpperCase(), handlePriceUpdate);
@@ -569,6 +574,13 @@
 		{userHolding}
 		onSuccess={handleBurnSuccess}
 	/>
+	{#if $USER_DATA}
+		<CreateAdModal
+			bind:open={adModalOpen}
+			preselectedCoinId={coin.id}
+			userGems={$GEMS_BALANCE ?? 0}
+		/>
+	{/if}
 {/if}
 <div class="container mx-auto max-w-7xl p-6">
 	{#if loading}
@@ -762,6 +774,17 @@
 										<HugeiconsIcon icon={Coins01Icon} class="h-4 w-4" />
 										{$_('coin.trade.burn.title').replace('{{symbol}}', coin.symbol)}
 									</Button>
+									{#if $USER_DATA}
+										<Button
+											class="w-full border-yellow-500/50 bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20 dark:text-yellow-400"
+											variant="outline"
+											size="lg"
+											onclick={() => (adModalOpen = true)}
+										>
+											<HugeiconsIcon icon={MegaphoneIcon} class="h-4 w-4" />
+											Advertise This Coin
+										</Button>
+									{/if}
 								</div>
 							{:else}
 								<div class="py-4 text-center">
