@@ -11,10 +11,10 @@ export const TOTAL_COST = CREATION_FEE + INITIAL_LIQUIDITY; // $1100
 // ADVERTISEMENT PRICING
 // Cost is in gems
 export const AD_DURATIONS = [
-	{ hours: 1, cost: 500 },
-	{ hours: 6, cost: 2500 },
-	{ hours: 12, cost: 4000 },
-	{ hours: 24, cost: 6000 },
-	{ hours: 48, cost: 10000 },
-	{ hours: 72, cost: 14000 }
+	{ hours: 1, cost: 20 },
+	{ hours: 6, cost: 100 },
+	{ hours: 12, cost: 160 },
+	{ hours: 24, cost: 240 },
+	{ hours: 48, cost: 400 },
+	{ hours: 72, cost: 560 }
 ] as const;
