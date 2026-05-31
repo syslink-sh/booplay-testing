@@ -445,10 +445,8 @@
 			<Sidebar.Group>
 				<Sidebar.GroupLabel class="text-[9px] tracking-widest uppercase text-yellow-500/70">Sponsored</Sidebar.GroupLabel>
 				<Sidebar.GroupContent>
-					<div class="flex flex-col gap-1.5 px-1 pb-1">
-						{#each sidebarAds as ad (ad.id)}
-							<AdSquare {ad} />
-						{/each}
+					<div class="px-1 pb-1">
+						<AdSquare ad={sidebarAds[0]} />
 					</div>
 				</Sidebar.GroupContent>
 			</Sidebar.Group>
