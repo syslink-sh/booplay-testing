@@ -56,6 +56,7 @@ export default {
 		lottery: 'Lottery',
 		live_trades: 'Live Trades',
 		settings: 'Settings',
+		advertisements: 'Advertisements',
 		admin: {
 			main: 'Admin',
 			promo: 'Promo Codes'

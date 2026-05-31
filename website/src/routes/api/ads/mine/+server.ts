@@ -4,10 +4,13 @@ import { db } from '$lib/server/db';
 import { advertisement, coin } from '$lib/server/db/schema';
 import { desc, eq } from 'drizzle-orm';
 
-export async function GET({ request }) {
+const PAGE_SIZE = 20;
+
+export async function GET({ request, url }) {
 	const session = await auth.api.getSession({ headers: request.headers });
 	if (!session?.user) throw error(401, 'Unauthorized');
 
+	const page = Math.max(1, Number(url.searchParams.get('page') ?? 1));
 	const userId = Number(session.user.id);
 
 	const ads = await db
@@ -27,7 +30,9 @@ export async function GET({ request }) {
 		.from(advertisement)
 		.innerJoin(coin, eq(advertisement.coinId, coin.id))
 		.where(eq(advertisement.userId, userId))
-		.orderBy(desc(advertisement.createdAt));
+		.orderBy(desc(advertisement.createdAt))
+		.limit(PAGE_SIZE)
+		.offset((page - 1) * PAGE_SIZE);
 
-	return json(ads);
+	return json({ ads, page, hasMore: ads.length === PAGE_SIZE });
 }

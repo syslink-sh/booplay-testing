@@ -5,11 +5,11 @@ import { advertisement, user } from '$lib/server/db/schema';
 import { and, eq, gt, sql } from 'drizzle-orm';
 import { AD_DURATIONS } from '$lib/data/constants';
 
-export async function POST({ request }) {
+export async function POST({ params, request }) {
 	const session = await auth.api.getSession({ headers: request.headers });
 	if (!session?.user) throw error(401, 'Unauthorized');
 
-	const { adId, durationHours } = await request.json();
+	const { durationHours } = await request.json();
 	const dur = AD_DURATIONS.find((d) => d.hours === durationHours);
 	if (!dur) throw error(400, 'Invalid duration');
 
@@ -18,7 +18,7 @@ export async function POST({ request }) {
 	const [ad] = await db
 		.select({ id: advertisement.id, expiresAt: advertisement.expiresAt, userId: advertisement.userId })
 		.from(advertisement)
-		.where(and(eq(advertisement.id, Number(adId)), gt(advertisement.expiresAt, new Date())))
+		.where(and(eq(advertisement.id, Number(params.id)), gt(advertisement.expiresAt, new Date())))
 		.limit(1);
 
 	if (!ad) throw error(404, 'Active advertisement not found');

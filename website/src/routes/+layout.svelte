@@ -13,6 +13,7 @@
 	import AppSidebar from '$lib/components/self/AppSidebar.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
+	import { ADS, initAds } from '$lib/stores/ads';
 	import { USER_DATA } from '$lib/stores/user-data';
 	import { websocketController } from '$lib/stores/websocket';
 
@@ -28,6 +29,7 @@
 
 	onMount(() => {
 		websocketController.connect();
+		initAds();
 
 		console.log(
 			`%c                                       .--                    
@@ -101,7 +103,7 @@
 			'/legal/privacy': 'Privacy Policy',
 			'/legal/terms': 'Terms of Service',
 			'/shop': $_('page_names.shop'),
-			'/advertisements': 'Advertisements'
+			'/advertisements': $_('page_names.advertisements')
 		};
 
 		// Handle dynamic routes
@@ -122,7 +124,7 @@
 <!-- <RenderScan /> -->
 <ModeWatcher />
 <Toaster richColors={true} />
-<AdSidePanels hideAds={$USER_DATA?.hideAds ?? false} />
+<AdSidePanels hideAds={$USER_DATA?.hideAds ?? false} ads={$ADS} />
 
 <Sidebar.Provider>
 	<AppSidebar />
@@ -140,7 +142,7 @@
 			</div>
 		</header>
 
-		<AdBanner hideAds={$USER_DATA?.hideAds ?? false} />
+		<AdBanner hideAds={$USER_DATA?.hideAds ?? false} ads={$ADS} />
 
 		<div class="main-content-area">
 			<div class="@container/main flex flex-col gap-2">

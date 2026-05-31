@@ -17,6 +17,8 @@
 
 	let myAds = $state<any[]>([]);
 	let loading = $state(true);
+	let page = $state(1);
+	let hasMore = $state(false);
 	let createModalOpen = $state(false);
 	let extendingAdId = $state<number | null>(null);
 	let extendHours = $state(AD_DURATIONS[0].hours);
@@ -25,11 +27,15 @@
 	const activeAds = $derived(myAds.filter((a) => new Date(a.expiresAt).getTime() > Date.now()));
 	const pastAds = $derived(myAds.filter((a) => new Date(a.expiresAt).getTime() <= Date.now()));
 
-	async function loadAds() {
+	async function loadAds(p = 1) {
 		loading = true;
 		try {
-			const res = await fetch('/api/ads/mine');
-			if (res.ok) myAds = await res.json();
+			const res = await fetch(`/api/ads/mine?page=${p}`);
+			if (!res.ok) return;
+			const data = await res.json();
+			myAds = p === 1 ? data.ads : [...myAds, ...data.ads];
+			hasMore = data.hasMore;
+			page = p;
 		} catch {
 			toast.error('Failed to load ads');
 		} finally {
@@ -41,16 +47,16 @@
 		if (!extendingAdId) return;
 		extendLoading = true;
 		try {
-			const res = await fetch('/api/ads/extend', {
+			const res = await fetch(`/api/ads/${extendingAdId}/extend`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ adId: extendingAdId, durationHours: extendHours })
+				body: JSON.stringify({ durationHours: extendHours })
 			});
 			const data = await res.json();
 			if (!res.ok) { toast.error(data.message ?? 'Failed to extend'); return; }
 			toast.success('Ad extended!');
 			extendingAdId = null;
-			await loadAds();
+			await loadAds(1);
 			fetchGemsBalance();
 		} catch {
 			toast.error('Something went wrong');
@@ -66,7 +72,7 @@
 	});
 </script>
 
-<CreateAdModal bind:open={createModalOpen} userGems={$GEMS_BALANCE ?? 0} oncreated={loadAds} />
+<CreateAdModal bind:open={createModalOpen} userGems={$GEMS_BALANCE ?? 0} oncreated={() => loadAds(1)} />
 
 <div class="container mx-auto max-w-4xl p-6">
 	<div class="mb-8 flex items-center justify-between">
@@ -174,6 +180,13 @@
 				</Card.Root>
 			{/each}
 		</div>
+		{#if hasMore}
+			<div class="mt-4 flex justify-center">
+				<Button variant="outline" onclick={() => loadAds(page + 1)} disabled={loading}>
+					{loading ? 'Loading…' : 'Load more'}
+				</Button>
+			</div>
+		{/if}
 	{/if}
 
 	{#if !loading && myAds.length === 0}
