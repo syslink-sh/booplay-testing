@@ -127,6 +127,7 @@ export interface AdminLogEntry {
 }
 
 export const adminLogStore = writable<AdminLogEntry[]>([]);
+export const unoGameStore = writable<any | null>(null);
 
 let hasLoadedInitialTrades = false;
 
@@ -284,6 +285,10 @@ function handleWebSocketMessage(event: MessageEvent): void {
 
 			case 'admin_log':
 				adminLogStore.update((logs) => [message.data, ...logs.slice(0, 199)]);
+				break;
+
+			case 'uno_update':
+				unoGameStore.set(message.state);
 				break;
 
 			case 'ping':

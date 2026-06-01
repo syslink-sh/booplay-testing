@@ -846,6 +846,43 @@ export const weeklyLotteryTicket = pgTable(
 	})
 );
 
+export const duelStatusEnum = pgEnum('duel_status', [
+	'PENDING',
+	'IN_GAME',
+	'COMPLETED',
+	'DECLINED',
+	'CANCELLED',
+	'EXPIRED'
+]);
+
+export const duel = pgTable(
+	'duel',
+	{
+		id: serial('id').primaryKey(),
+		challengerId: integer('challenger_id')
+			.notNull()
+			.references(() => user.id, { onDelete: 'cascade' }),
+		challengedId: integer('challenged_id')
+			.notNull()
+			.references(() => user.id, { onDelete: 'cascade' }),
+		betAmount: decimal('bet_amount', { precision: 30, scale: 8 }).notNull(),
+		betType: varchar('bet_type', { length: 10 }).notNull().default('cash'), // 'cash' | 'gems'
+		status: duelStatusEnum('status').notNull().default('PENDING'),
+		winnerId: integer('winner_id').references(() => user.id, { onDelete: 'set null' }),
+		challengerSide: varchar('challenger_side', { length: 10 }),
+		coinResult: varchar('coin_result', { length: 10 }),
+		gameId: varchar('game_id', { length: 100 }),
+		expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+		completedAt: timestamp('completed_at', { withTimezone: true })
+	},
+	(table) => ({
+		challengerIdx: index('duel_challenger_id_idx').on(table.challengerId),
+		challengedIdx: index('duel_challenged_id_idx').on(table.challengedId),
+		statusIdx: index('duel_status_idx').on(table.status)
+	})
+);
+
 export const advertisement = pgTable(
 	'advertisement',
 	{

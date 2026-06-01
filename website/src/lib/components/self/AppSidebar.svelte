@@ -71,6 +71,7 @@
 			{ title: $_('page_names.market'), url: '/market', icon: Store01Icon },
 			{ title: $_('page_names.hopium'), url: '/hopium', icon: ArrowUpDownIcon },
 			{ title: $_('page_names.arcade'), url: '/arcade', icon: Joystick04Icon },
+			{ title: '1v1', url: '/1v1', icon: ChampionIcon },
 			{ title: $_('page_names.lottery'), url: '/lottery', icon: Money01Icon },
 			{
 				title: $_('page_names.leaderboard'),

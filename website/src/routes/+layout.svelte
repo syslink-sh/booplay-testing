@@ -103,7 +103,8 @@
 			'/legal/privacy': 'Privacy Policy',
 			'/legal/terms': 'Terms of Service',
 			'/shop': $_('page_names.shop'),
-			'/advertisements': $_('page_names.advertisements')
+			'/advertisements': $_('page_names.advertisements'),
+			'/1v1': '1v1 Duels'
 		};
 
 		// Handle dynamic routes
